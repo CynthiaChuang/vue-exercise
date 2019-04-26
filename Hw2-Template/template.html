@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HW1 - Todo List</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="images/favicon.ico" rel="shortcut icon"> 
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>	
+  <link id="bscss" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-lighter">
+  <div id="app">
+    <table class="table">
+      <thead>
+        <tr>
+          <th v-for="head in headers" 
+              :class="{'click':head.sortable}"
+              @click="isReverse = !isReverse, sortBy = head.key"> {{ head.name }}
+            <span v-if="head.sortable"      
+                  v-show="sortBy === head.key"
+                  class="icon isReverse" 
+                  :class="{'inverse':isReverse}">
+              <i class=" fas fa-angle-up text-success"></i>
+            </span>
+          </th>
+        </tr>
+        <tr v-for="item in sortedData"> 
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.expiryDate }}</td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <script>
+    var app = new Vue({
+    el: '#app',
+    data: {
+      headers:[
+        { 
+            name: "品名",
+            key:"name",
+            sortable: false
+        },
+        {
+          name: "價格",
+          key: "price",
+          sortable: true
+        },
+        {
+          name: "到期日",
+          key: "expiryDate",
+          sortable: true
+        }
+      ],
+      data: [
+        {
+          name: '巧呼呼蘇打水',
+          price: 30,
+          expiryDate: 90
+        },
+        {
+          name: '心驚膽跳羊肉飯',
+          price: 65,
+          expiryDate: 2
+        },
+        {
+          name: '郭師傅武功麵包',
+          price: 32,
+          expiryDate: 1
+        },
+        {
+          name: '不太會過期的新鮮牛奶',
+          price: 75,
+          expiryDate: 600
+        },
+        {
+          name: '金殺 巧粒粒',
+          price: 120,
+          expiryDate: 200
+        }
+      ],
+      sortBy :"price",
+      isReverse: true,
+    },
+    computed: {
+      sortedData(){
+        let vm = this ;
+        return this.data.sort((a, b) => {
+          let diff =  a[vm.sortBy] - b[vm.sortBy] 
+          return vm.isReverse? diff : diff * -1 ;
+        });
+      }
+    }
+  });
+  </script>
+  <style>
+    .table th.click {
+      cursor: pointer;
+    }
+
+    .table th.click {
+      cursor: pointer;
+    }
+
+    .icon {
+      display: inline-block;
+    }
+    .icon.inverse {
+      transform: rotate(180deg)
+    }
+  </style>
+</body>
+</html>

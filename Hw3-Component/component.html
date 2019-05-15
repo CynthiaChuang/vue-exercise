@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>HW3 - Component</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="images/favicon.ico" rel="shortcut icon">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <link id="bscss" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body class="bg-lighter">
+<div id="app" class="container my-5">
+
+    <area-selecter v-for="(item, idx) in selectArea"
+                   :key="idx"
+                   :area-type="item.type"
+                   :get-candidates="item.candidatesFun"
+                   :tip="item.tip"
+                   :init-selected="item.selected"
+                   @callback="setSelectResult"></area-selecter>
+
+    <div>
+        <h4>關注城市</h4>
+        <div class="card-columns">
+
+            <aqi-card v-for="(city, idx) in getFocusedCityData"
+                      :key="city.county+city.site"
+                      :area="{county:city.county, site:city.site}"
+                      :quality="{aqi:city.aqi, pm25:city.pm25, status:city.status}"
+                      :last-update-time="city.lastUpdateTime"
+                      :init-focus="true"
+                      @update-focused="updateFocused">
+            </aqi-card>
+
+        </div>
+    </div>
+    <hr>
+
+    <div>
+        <h4>所有城市</h4>
+        <div class="card-columns">
+            <aqi-card v-for="(city, idx) in getSelectCityData"
+                      :key="city.county+city.site"
+                      :area="{county:city.county, site:city.site}"
+                      :quality="{aqi:city.aqi, pm25:city.pm25, status:city.status}"
+                      :init-focus="city.isFocused"
+                      :last-update-time="city.lastUpdateTime"
+                      @update-focused="updateFocused"></aqi-card>
+
+        </div>
+    </div>
+
+
+    <hr>
+</div>
+
+<script type="text/x-template" id="areaSelecterTemp">
+    <select name="" id="" class="form-control mb-3" v-model="selected">
+        <option disabled value="">{{ tip }}</option>
+        <option v-for="(cand, idx) in getCandidates()" :id="idx" :value="cand">{{ cand }}</option>
+    </select>
+</script>
+
+<script type="text/x-template" id="aqiCardTemp">
+    <div :class="getAqiIndicatorColor">
+        <div class="card-header">{{area.county}} - {{area.site}}
+            <a href="#" class="float-right"><i :class="getStartStatus" @click.prevent="updateFocused"></i></a>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li>AQI 指數: {{quality.aqi}}</li>
+                <li>PM2.5: {{quality.pm25}}</li>
+                <li>說明: {{quality.status}}</li>
+            </ul>
+            {{lastUpdateTime}}
+        </div>
+    </div>
+</script>
+
+<script>
+    var areaSelecter = {
+        template: '#areaSelecterTemp',
+        data: function () {
+            return {
+                selected: this.initSelected,
+            }
+        },
+        props: {
+            areaType: {
+                type: String,
+                required: true,
+            },
+            initSelected: {
+                type: String,
+            },
+            getCandidates: {
+                type: Function,
+                required: true,
+            },
+            tip: {
+                type: String,
+                default: "--- 請選擇 ---"
+            }
+        },
+        watch: {
+            selected() {
+                if (this.selected) {
+                    this.$emit("callback", this.areaType, this.selected);
+                }
+            },
+            initSelected() {
+                this.selected = this.initSelected;
+            }
+        },
+
+    };
+
+    var aqiCard = {
+        template: '#aqiCardTemp',
+        data: function () {
+            return {
+                focused: this.initFocus,
+            }
+        },
+        props: {
+            area: {
+                type: Object,
+                required: true,
+                default: {county: "", site: ""}
+            },
+            quality: {
+                type: Object,
+                required: true,
+                default: {aqi: "", pm25: "", status: ""}
+            },
+            lastUpdateTime: {
+                type: String
+            },
+            initFocus: {
+                type: Boolean,
+                default: false
+            }
+        },
+        watch: {
+            initFocus() {
+                this.focused = this.initFocus
+            }
+        },
+        methods: {
+            updateFocused() {
+                this.focused = !this.focused;
+                this.$emit("update-focused", this.focused, this.area)
+            }
+        },
+        computed: {
+            getStartStatus() {
+                let startClass = ["fa-star"];
+                startClass.push(this.focused ? "fas" : "far");
+                return startClass
+            },
+            getAqiIndicatorColor() {
+                let cardClass = ["card"];
+                switch (this.quality.status) {
+                    case '普通':
+                        cardClass.push('status-aqi2');
+                        break;
+
+                    case '對敏感族群不健康':
+                        cardClass.push('status-aqi3');
+                        break;
+
+                    case '對所有族群不健康':
+                        cardClass.push('status-aqi4');
+                        break;
+
+                    case '非常不健康':
+                        cardClass.push('status-aqi5');
+                        break;
+
+                    case '危害':
+                        cardClass.push('status-aqi6');
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return cardClass
+            }
+        }
+    }
+
+    var app = new Vue({
+        el: '#app',
+        components: {
+            'aqi-card': aqiCard,
+            'area-selecter': areaSelecter
+        },
+        data: {
+            apiData: [],
+            selectArea: {},
+            focusedAreaName: []
+        },
+        created() {
+            this.getData();
+            this.initSelectArea();
+            this.initFocusedAreaName();
+        },
+        methods: {
+            getData() {
+                const VM = this;
+                const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/';
+                const API = 'http://opendata2.epa.gov.tw/AQI.json';
+
+                $.get(CORS_ANYWHERE + API).then(function (response) {
+                  VM.apiData = response.map(item =>( {
+                    county: item["County"],
+                    site: item["SiteName"],
+                    aqi: item["AQI"],
+                    pm25 : item["PM2.5"],
+                    status: item["Status"],
+                    lastUpdateTime: item["PublishTime"],
+                  }));
+                });
+
+            },
+            saveFocusedAreaName() {
+                localStorage.setItem('focusedAreaName', JSON.stringify(this.focusedAreaName));
+            },
+            initFocusedAreaName() {
+                this.focusedAreaName = localStorage.getItem('focusedAreaName');
+                this.focusedAreaName = this.focusedAreaName ? JSON.parse(this.focusedAreaName) : [];
+            },
+            initSelectArea() {
+                Vue.set(this.selectArea, "county", {
+                    type: "County",
+                    tip: "--- 請選擇縣市 ---",
+                    candidatesFun: () => {
+                        return this.getCounties
+                    },
+                    selected: ""
+                })
+
+                Vue.set(this.selectArea, "site", {
+                    type: "Site",
+                    tip: "--- 請選擇鄉鎮市區 ---",
+                    candidatesFun: () => {
+                        return this.getSites
+                    },
+                    selected: ""
+                })
+            },
+            setSelectResult(type, value) {
+                let tmp = this.selectArea
+                switch (type) {
+                    case this.selectArea.county.type:
+                        Vue.set(this.selectArea.county, "selected", value);
+                        Vue.set(this.selectArea.site, "selected", "");
+                        break;
+
+                    case this.selectArea.site.type:
+                        Vue.set(this.selectArea.site, "selected", value)
+                        break;
+                }
+            },
+            updateFocused(isFocused, area) {
+                let key = `${area.county}${area.site}`;
+                if (isFocused) {
+                    Vue.set(this.focusedAreaName, this.focusedAreaName.length, key)
+                } else {
+                    let idx = this.focusedAreaName.findIndex((element) => (element === key));
+                    Vue.delete(this.focusedAreaName, idx);
+                }
+
+                this.saveFocusedAreaName();
+
+            }
+        },
+        computed: {
+            getCounties: function () {
+                let set = new Set();
+                return ["全部"].concat(this.apiData.map(item => item.county)
+                    .filter(item => !set.has(item) ? set.add(item) : false));
+            },
+            getSites: function () {
+
+                let selectCounty = this.selectArea.county.selected;
+                if (!selectCounty || selectCounty === "全部") {
+                    return []
+                }
+
+                let set = new Set();
+                return this.apiData.filter((item) => {
+                    if (item.county !== selectCounty) {
+                        return false
+                    }
+                    return !set.has(item) ? set.add(item) : false
+                }).map(item => item.site);
+            },
+            getSelectCityData() {
+                let selectCounty = this.selectArea.county.selected;
+                let selectSite = this.selectArea.site.selected;
+
+                let result = []
+                if (selectCounty === "" || selectCounty === "全部") {
+                    result = this.apiData
+                } else {
+                    result = this.apiData.filter((item) => {
+                        return item.county === selectCounty && (selectSite === "" || item.site === selectSite)
+                    })
+                }
+
+                result = result.map((item) => {
+                    item.isFocused = this.focusedAreaName.some((element) => {
+                        return element === `${item.county}${item.site}`
+                    })
+                    return item
+                })
+
+                return result
+            },
+            getFocusedCityData() {
+                return this.apiData.filter((item) => {
+                    return this.focusedAreaName.some((element) => {
+                        return element === `${item.county}${item.site}`
+                    })
+                })
+            },
+        },
+    });
+</script>
+
+
+<style>
+    .status-aqi2 {
+        background-color: #ffff00;
+    }
+
+    .status-aqi3 {
+        background-color: #ff7e00;
+    }
+
+    .status-aqi4 {
+        background-color: #ff0000;
+    }
+
+    .status-aqi5 {
+        background-color: #8f3f97;
+    }
+
+    .status-aqi6 {
+        background-color: #7e0023;
+    }
+</style>
+</body>
+
+</html>

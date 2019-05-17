@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import LoginPage from '@/components/common/LoginPage.vue'
+
 import HomePage from '@/components/forestage/home/HomePage.vue'
-import Footer from '@/components/common/Footer.vue'
-import LoginPage from '@/components/backstage/LoginPage.vue'
+import ForeFooter from '@/components/forestage/Footer.vue'
+
 import ManagerPage from '@/components/backstage/ManagerPage.vue'
 import Orders from '@/components/backstage/order/Orders.vue'
+import BackFooter from '@/components/backstage/Footer.vue'
 
 Vue.use(Router);
 
@@ -14,7 +17,7 @@ export default new Router({
       path: '*',
       components: {
         default: HomePage,
-        footer: Footer,
+        footer: ForeFooter,
       },
     },
     {
@@ -22,7 +25,7 @@ export default new Router({
       name: 'HomePage',
       components: {
         default: HomePage,
-        footer: Footer,
+        footer: ForeFooter,
       },
     },
     {
@@ -36,7 +39,7 @@ export default new Router({
       path: '/admin',
       components: {
         default: ManagerPage,
-        footer: Footer,
+        footer: BackFooter,
       },
       children: [
         {

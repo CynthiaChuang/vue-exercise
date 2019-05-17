@@ -8,7 +8,7 @@ import VueI18n from 'vue-i18n'
 import 'bootstrap'
 
 import router from './router'
-import zh_tw from './i18n/zh_tw.js'
+import zh_tw from './i18n/zh_tw.json'
 
 Vue.use(VueAxios, axios);
 Vue.use(VueI18n);

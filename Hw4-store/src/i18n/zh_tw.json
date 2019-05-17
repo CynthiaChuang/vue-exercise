@@ -1,0 +1,9 @@
+{
+  "shopName": "Stationery",
+  "shoppingCart": {
+    "shoppingCart": "購物車",
+    "selectedItem":"已選擇商品",
+    "checkOut":"結帳去"
+  }
+
+}

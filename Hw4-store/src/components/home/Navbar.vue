@@ -5,9 +5,11 @@
         <div class="col-4 pt-1">
           <a class="text-muted" href="#">Subscribe</a>
         </div>
+
         <div class="col-4 text-center">
-          <a class="blog-header-logo text-dark" href="#">Large</a>
+          <a class="blog-header-logo text-dark" href="#">{{ $t("shopName") }}</a>
         </div>
+
         <div class="col-4 d-flex justify-content-end align-items-center">
           <a class="text-muted" href="#">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
@@ -17,7 +19,8 @@
               <path d="M21 21l-5.2-5.2"/>
             </svg>
           </a>
-          <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+          <a class="btn btn-sm btn-outline-primary"  href="#">Sign up</a>
+          <ShoppingCart></ShoppingCart>
         </div>
       </div>
     </header>
@@ -43,10 +46,14 @@
 
 <script>
   import BaseComp from "@/components/common/BaseComp.vue"
+  import ShoppingCart from "@/components/common/ShoppingCart.vue"
 
   export default {
     name: "Navbar",
     extends: BaseComp,
+    components:{
+      ShoppingCart
+    }
   }
 </script>
 

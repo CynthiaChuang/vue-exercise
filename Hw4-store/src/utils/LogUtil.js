@@ -4,7 +4,7 @@ export default {
   debug(vm, ...message) {
     if (process.env.NODE_ENV === "dev") {
       message.forEach(e => JSON.stringify(e))
-      console.debug(`[${TAG}][debug][${this.getComponentName(vm)}] >`, ...message);
+      console.log(`[${TAG}][debug][${this.getComponentName(vm)}] >`, ...message);
     }
   },
   info(vm, ...message) {

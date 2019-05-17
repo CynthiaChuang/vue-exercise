@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <header class="homepage-header py-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="col-4 pt-1">
@@ -93,25 +93,5 @@
     padding-top: .75rem;
     padding-bottom: .75rem;
     font-size: .875rem;
-  }
-
-  .card-img-right {
-    height: 100%;
-    border-radius: 0 3px 3px 0;
-  }
-
-  .flex-auto {
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
-  }
-
-  .h-250 {
-    height: 250px;
-  }
-
-  @media (min-width: 768px) {
-    .h-md-250 {
-      height: 250px;
-    }
   }
 </style>

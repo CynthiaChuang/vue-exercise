@@ -38,9 +38,11 @@
   import logger from "@/utils/LogUtil.js"
   import apiUtil from "@/utils/ApiUtil.js"
   import routerUtil from "@/utils/RouterUtil.js"
+  import BasePage from "@/components/common/BasePage.vue"
 
   export default {
     name: "Login",
+    extends: BasePage,
     data: () => ({
       loginFailed: false,
       showPassword: false,
@@ -50,14 +52,14 @@
     methods: {
       onSubmit() {
         apiUtil.login(this.$http, this.username, this.password).then((response) => {
-          logger.debug(this, response.data);
+          logger.debug(this, "login" ,response.data);
           this.loginFailed = !response.data.success;
           if (this.loginFailed) {
             this.username = "";
             this.password = "";
             return
           }
-          routerUtil.gotoManager(this.$router)
+          routerUtil.gotoManagerPage(this.$router);
         })
       }
     }

@@ -109,10 +109,12 @@
 </template>
 
 <script>
-  import Navbar from "./Navbar"
+  import Navbar from "./Navbar.vue"
+  import BasePage from "@/components/common/BasePage.vue"
 
   export default {
     name: 'HelloWorld',
+    extends: BasePage,
     components: {
       Navbar
     },

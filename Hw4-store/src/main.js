@@ -11,6 +11,7 @@ import router from './router'
 import zh_tw from './i18n/zh_tw.json'
 import apiUtil from "./utils/ApiUtil.js"
 import logger from "@/utils/LogUtil.js"
+import routerUtil from "@/utils/RouterUtil.js"
 
 Vue.use(VueAxios, axios);
 Vue.use(VueI18n);
@@ -31,16 +32,4 @@ new Vue({
   i18n,
   components: {App},
   template: '<App/>'
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    apiUtil.checkPermission(axios).then((response) => {
-      if (!response.data.success) {
-        logger.info(this, response.data);
-        return
-      }
-    })
-  }
-  next()
 });

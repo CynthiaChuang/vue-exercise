@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/components/forestage/home/HomePage.vue'
 import Footer from '@/components/common/Footer.vue'
-import Login from '@/components/backstage/Login.vue'
-import Manager from '@/components/backstage/Manager.vue'
-
+import LoginPage from '@/components/backstage/LoginPage.vue'
+import ManagerPage from '@/components/backstage/ManagerPage.vue'
+import Orders from '@/components/backstage/order/Orders.vue'
 
 Vue.use(Router);
 
@@ -27,21 +27,29 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'LoginPage',
       components: {
-        default: Login,
+        default: LoginPage,
       },
     },
     {
       path: '/admin',
-      name: 'Manager',
       components: {
-        default: Manager,
+        default: ManagerPage,
         footer: Footer,
       },
-      meta:{
-        requiresAuth:true
-      }
+      children: [
+        {
+
+          path: "",
+          component: Orders,
+          name: "Orders",
+          meta: {
+            requiresAuth: true
+          },
+        },
+      ]
+
     }
   ]
 })

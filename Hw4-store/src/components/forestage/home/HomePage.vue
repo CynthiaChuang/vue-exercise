@@ -109,12 +109,10 @@
 </template>
 
 <script>
-  import BaseComp from "@/components/common/BaseComp.vue"
   import Navbar from "./Navbar"
 
   export default {
     name: 'HelloWorld',
-    extends:  BaseComp,
     components: {
       Navbar
     },
@@ -126,6 +124,17 @@
   }
 </script>
 <style scoped>
+
+  .display-4 {
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .display-4 {
+      font-size: 3rem;
+    }
+  }
+
   /*
    * Blog name and description
    */

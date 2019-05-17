@@ -4,6 +4,9 @@
     "shoppingCart": "購物車",
     "selectedItem":"已選擇商品",
     "checkOut":"結帳去"
+  },
+  "login": {
+    "error": "帳號密碼錯誤，請再檢查！"
   }
 
 }

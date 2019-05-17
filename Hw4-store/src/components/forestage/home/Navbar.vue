@@ -1,13 +1,13 @@
 <template>
   <div>
-    <header class="blog-header py-3">
+    <header class="homepage-header py-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="col-4 pt-1">
           <a class="text-muted" href="#">Subscribe</a>
         </div>
 
         <div class="col-4 text-center">
-          <a class="blog-header-logo text-dark" href="#">{{ $t("shopName") }}</a>
+          <a class="homepage-header-logo web-title text-dark" href="#">{{ $t("shopName") }}</a>
         </div>
 
         <div class="col-4 d-flex justify-content-end align-items-center">
@@ -45,12 +45,10 @@
 </template>
 
 <script>
-  import BaseComp from "@/components/common/BaseComp.vue"
   import ShoppingCart from "@/components/common/ShoppingCart.vue"
 
   export default {
     name: "Navbar",
-    extends: BaseComp,
     components:{
       ShoppingCart
     }
@@ -58,29 +56,17 @@
 </script>
 
 <style scoped>
-  .blog-header {
+  .homepage-header {
     line-height: 1;
     border-bottom: 1px solid #e5e5e5;
   }
 
-  .blog-header-logo {
-    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  .homepage-header-logo {
     font-size: 2.25rem;
   }
 
-  .blog-header-logo:hover {
+  .homepage-header-logo:hover {
     text-decoration: none;
-  }
-
-
-  .display-4 {
-    font-size: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .display-4 {
-      font-size: 3rem;
-    }
   }
 
   .nav-scroller {

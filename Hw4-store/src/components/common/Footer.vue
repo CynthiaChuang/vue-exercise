@@ -11,11 +11,10 @@
 </template>
 
 <script>
-  import BaseComp from "@/components/common/BaseComp.vue"
+
 
   export default {
-    name: "Footer",
-    extends: BaseComp,
+    name: "Footer"
   }
 </script>
 

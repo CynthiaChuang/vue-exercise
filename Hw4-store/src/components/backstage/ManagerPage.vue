@@ -1,6 +1,8 @@
 <template>
   <div class="container">
+
     <Navbar></Navbar>
+
     <div class="margin-top">
       <router-view></router-view>
     </div>

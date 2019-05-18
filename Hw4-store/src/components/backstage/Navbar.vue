@@ -1,17 +1,32 @@
 <template>
-  <div class="container fixed-top">
-    <header class="nav-header py-3 ">
-      <div class="row flex-nowrap justify-content-between align-items-center">
-        <div class="col-4">
-          <a class="nav-header-logo web-title text-dark" href="#" @click.prevent="gotoHomePage">{{ $t("shopName") }}</a>
+  <nav class="container nav-header navbar-light py-3 fixed-top">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="col-10">
+        <a class="nav-header-logo web-title text-dark" href="#" @click.prevent="gotoHomePage">{{ $t("shopName") }}</a>
+      </div>
+
+      <div class="col-1 d-flex justify-content-end align-items-center">
+        <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent="logout">Sign up</a>
+      </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <div class="row container">
+        <div class="col-12 col-md">
         </div>
 
-        <div class="col-4 d-flex justify-content-end align-items-center">
-          <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent="logout">Sign up</a>
+        <div class="col-6 col-md" v-for="(items,classification) in classifications" :key="classification">
+          <h5>{{classification}}</h5>
+          <ul class="list-unstyled text-small" v-for="(item,index) in items" :key="index">
+            <li><a class="text-muted" style="line-height:1" href="#" @click.prevent="item.action">{{item.name}}</a></li>
+          </ul>
         </div>
       </div>
-    </header>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -19,23 +34,98 @@
   import apiUtil from "@/utils/ApiUtil.js"
   import routerUtil from "@/utils/RouterUtil.js"
 
+  import Sidebar from "./Sidebar.vue"
+
+
   export default {
     name: "Navbar",
-    methods: {
-      gotoHomePage() {
-        routerUtil.gotoHomePage(this.$router);
-      },
-      logout() {
-        apiUtil.logout(this.$http).then((response) => {
-          logger.debug(this, "logout" ,response);
-          routerUtil.gotoHomePage(this.$router);
-        })
+    components: {
+      Sidebar
+    },
+    created() {
+
+    },
+    data() {
+      return {
+        classifications: {
+          Features: [
+            {
+              name: "World",
+              action: () => {
+              }
+            },
+            {
+              name: "Random feature",
+              action: () => {
+
+              }
+            },
+            {
+              name: "Team feature",
+              action: () => {
+
+              }
+            },
+            {
+              name: "Stuff for developers",
+              action: () => {
+
+              }
+            }],
+          Resources: [
+            {
+              name: "Business",
+              action: () => {
+              }
+            },
+            {
+              name: "Education",
+              action: () => {
+              }
+            },
+            {
+              name: "Government",
+              action: () => {
+              }
+            }],
+          System: [
+            {
+              name: "登出",
+              action: () => {
+                this.logout();
+              }
+            },
+            {
+              name: "返回前台",
+              action: () => {
+                this.gotoHomePage()
+              }
+            }]
+        }
       }
-    }
+    },
+    methods:
+      {
+        gotoHomePage() {
+          routerUtil.gotoHomePage(this.$router);
+        }
+        ,
+        // TODO: 要移到外層去做
+        logout() {
+          apiUtil.logout(this.$http).then((response) => {
+            logger.debug(this, "logout", response);
+            routerUtil.gotoHomePage(this.$router);
+          })
+        }
+      }
   }
 </script>
 
 <style scoped>
+  .tmp {
+    margin: 100px;
+  }
+
   .nav-header {
     line-height: 1;
     background: white;

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
+
     <form class="form-signin" @submit.prevent="onSubmit">
       <h2 class="web-title text-dark text-center mb-3">{{ $t("shopName") }}</h2>
 
@@ -48,12 +50,15 @@
       showPassword: false,
       username: "",
       password: "",
+      isLoading: false
     }),
     methods: {
       onSubmit() {
+        this.isLoading = true ;
         apiUtil.login(this.$http, this.username, this.password).then((response) => {
           logger.debug(this, "login" ,response.data);
           this.loginFailed = !response.data.success;
+          this.isLoading = false ;
           if (this.loginFailed) {
             this.username = "";
             this.password = "";

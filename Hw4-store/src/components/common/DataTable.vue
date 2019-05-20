@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <table class="table mt-4">
       <thead>
       <tr>
@@ -50,7 +49,7 @@
     </slot>
 
 
-    <!---->
+    <!--pagination-->
     <nav v-if="tableItem.length >0" aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item" :class="{'disabled':!pagination.hasPre}">
@@ -127,24 +126,25 @@
 </script>
 
 <style scoped>
-  @import url(//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css);
-
   .fontawesome-checkbox input[type="checkbox"] {
     display: none;
   }
 
-  .fontawesome-checkbox span:before {
-    font-family: "FontAwesome";
+  .fontawesome-checkbox span:before {;
+    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+    font-weight: 400;
     font-style: normal;
     color: #6c757d;
     width: 1em;
-    height: 1em;
-    content: "\f096";
+    height: 1em;;
+    content: "\f0c8";
   }
 
   .fontawesome-checkbox input[type="checkbox"]:checked ~ span:before {
+    font-weight: 900;
     content: '\f14a';
   }
 
 
-</style>
+
+ </style>

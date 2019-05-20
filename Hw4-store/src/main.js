@@ -6,13 +6,16 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
 import 'bootstrap'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import router from './router'
 import zh_tw from './i18n/zh_tw.json'
 
+
 Vue.use(VueAxios, axios);
 Vue.use(VueI18n);
-
+Vue.component("Loading", Loading);
 
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
@@ -21,7 +24,6 @@ const i18n = new VueI18n({
   locale: 'zh_tw',
   messages: {zh_tw}
 });
-
 
 Vue.filter("separator", function (num) {
   const n = Number(num);

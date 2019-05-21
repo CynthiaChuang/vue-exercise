@@ -18,6 +18,21 @@ export default {
     }
 
     return http.get(API)
+  },
+  modifyProduct(http, product) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product/${product.id}`;
+    return http.put(API, {data: product})
+  },
+  uploadImage(http, formData) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/upload`;
+    return http.post(API, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+  },
+  uploadProduct(http, product) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product`;
+    return http.post(API, {data: product})
   }
-
 }

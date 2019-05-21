@@ -1,7 +1,7 @@
 <template>
   <nav class="container nav-header navbar-light py-3 fixed-top">
     <div class="row flex-nowrap justify-content-between align-items-center">
-      <button class="col-1 navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+      <button class="col-1 navbar-toggler" type="button" data-toggle="collapse" data-target="#managerNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -13,7 +13,7 @@
         <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent="logout">Sign up</a>
       </div>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
+    <div class="collapse navbar-collapse" id="managerNavbar">
       <div class="row container">
         <div class="col-12 col-md">
         </div>
@@ -21,7 +21,8 @@
         <div class="col-6 col-md" v-for="(items,classification) in classifications" :key="classification">
           <h5>{{classification}}</h5>
           <ul class="list-unstyled text-small" v-for="(item,index) in items" :key="index">
-            <li><a class="text-muted" style="line-height:1" href="#" @click.prevent="item.action">{{item.name}}</a></li>
+            <li><a class="text-muted" style="line-height:1" href="#" @click.prevent="item.action"
+                   data-toggle="collapse" data-target="#managerNavbar">{{item.name}}</a></li>
           </ul>
         </div>
       </div>

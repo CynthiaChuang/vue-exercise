@@ -5,7 +5,7 @@
     <div class="row flex-nowrap justify-content-between align-items-center">
       <h2 class="col-9">{{$t("manager.products")}}</h2>
       <div class="col-2 d-flex justify-content-end ">
-        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="onNewArrivals">
+        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
           {{$t("products.newArrivals")}}
         </a>
       </div>
@@ -20,21 +20,20 @@
       <template slot-scope="props">
         <td>{{props.item.category}}</td>
         <td>{{props.item.title}}</td>
-        <td class="text-right">{{props.item.originPrice | separator | dollarSign}} </td>
+        <td class="text-right">{{props.item.originPrice | separator | dollarSign}}</td>
         <td class="text-right">{{props.item.price | separator | dollarSign}}</td>
         <td>
           <span v-if="props.item.isEnabled" class="text-success">
-            {{$t("products.status.putOnSale")}}
+            {{$t("products.tableBody.status.putOnSale")}}
           </span>
-          <span v-else>{{$t("products.status.pullOffShelves")}}</span>
+          <span v-else>{{$t("products.tableBody.status.pullOffShelves")}}</span>
         </td>
         <td>
-          <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent="onEdit">
-            {{$t("products.edit")}}
+          <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent="showModifyDialog(props.item)">
+            {{$t("products.tableBody.edit")}}
           </a>
         </td>
       </template>
-
 
       <div slot="no-data" class="text-center mt-5">
         <div>
@@ -42,23 +41,45 @@
         </div>
         <p class="text-center mt-3" style="color:rgba(108,117,125,0.38);">
           {{$t("products.NoProducts")}}</p>
-        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="onNewArrivals">
+        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
           {{$t("products.newArrivals")}}</a>
       </div>
 
     </DataTable>
+
+    <!-- Upload Dialog -->
+    <ProductDialog
+      :dialogId="uploadDialogId"
+      :title="$t('products.dialogTitles.upload')"
+      @done="uploadProduct"
+    />
+
+    <!-- Modify Dialog -->
+    <ProductDialog
+      :dialogId="modifyDialogId"
+      :title="$t('products.dialogTitles.modify')"
+      :product="modifyItem"
+      @done="modifyProduct"
+    />
+
   </div>
 </template>
 
 <script>
+  import $ from "jquery"
+
   import logger from "@/utils/LogUtil.js"
   import apiUtil from "@/utils/ApiUtil.js"
 
   import DataTable from "@/components/common/DataTable.vue"
+  import ProductDialog from "@/components/backstage/products/ProductDialog.vue"
 
   export default {
     name: "Products",
-    components: {DataTable},
+    components: {
+      DataTable,
+      ProductDialog
+    },
     data: () => ({
       pagination: {
         currentPage: 1,
@@ -68,7 +89,10 @@
       },
       products: [],
       headers: [],
-      isLoading: false
+      isLoading: false,
+      uploadDialogId: "uploadDialog",
+      modifyDialogId: "modifyDialog",
+      modifyItem: {}
     }),
     created() {
       this.getProducts();
@@ -76,13 +100,14 @@
     },
     methods: {
       initHeaders() {
+        // TODO:庫存
         this.headers = [
-          {name: this.$t("products.headers.classification"), width: 120},
-          {name: this.$t("products.headers.productName"), width: ""},
-          {name: this.$t("products.headers.originalPrice"), width: 120},
-          {name: this.$t("products.headers.price"), width: 120},
-          {name: this.$t("products.headers.status"), width: 100},
-          {name: this.$t("products.headers.edit"), width: 100}
+          {name: this.$t("products.tableHeaders.classification"), width: 120},
+          {name: this.$t("products.tableHeaders.productName"), width: ""},
+          {name: this.$t("products.tableHeaders.originalPrice"), width: 120},
+          {name: this.$t("products.tableHeaders.price"), width: 120},
+          {name: this.$t("products.tableHeaders.status"), width: 100},
+          {name: this.$t("products.tableHeaders.edit"), width: 100}
         ]
       },
       pageTurning(from, to) {
@@ -92,7 +117,7 @@
         this.getProducts(to);
       },
       getProducts(index = 1) {
-        this.isLoading = true ;
+        this.isLoading = true;
         let vm = this;
         apiUtil.getProducts(this.$http, index).then((response) => {
           logger.debug(this, "getProducts", response);
@@ -100,11 +125,16 @@
             vm.products = response.data.products.map((item) => {
               return {
                 id: item.id,
-                category: item.category,
                 title: item.title,
+                category: item.category,
+                content: item.content,
+                description: item.description,
+                num: item.num,
+                unit: item.unit,
                 originPrice: item.origin_price,
                 price: item.price,
-                isEnabled: item.is_enabled
+                isEnabled: item.is_enabled,
+                imageUrl: item.image,
               }
             });
 
@@ -115,15 +145,71 @@
               hasPre: response.data.pagination.has_pre,
             };
           }
-          this.isLoading = false ;
+          this.isLoading = false;
         })
       },
-      onEdit() {
+      showUploadDialog() {
+        $(`#${this.uploadDialogId}`).modal("show");
+      },
+      hideUploadDialog() {
+        $(`#${this.uploadDialogId}`).modal("hide");
+      },
+      uploadProduct(item) {
+        this.isLoading = true;
+
+        item = {
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          content: item.content,
+          description: item.description,
+          num: item.num,
+          unit: item.unit,
+          origin_price: item.originPrice,
+          price: item.price,
+          is_enabled: item.isEnabled,
+          image: item.imageUrl,
+        };
+
+        apiUtil.uploadProduct(this.$http, item).then((response) => {
+          logger.debug(this, "uploadProduct", response);
+          this.hideUploadDialog();
+          this.isLoading = false;
+          this.getProducts(this.pagination.currentPage)
+        });
 
       },
-      onNewArrivals() {
+      showModifyDialog(item) {
+        this.modifyItem = item;
+        $(`#${this.modifyDialogId}`).modal("show");
+      },
+      hideModifyDialog() {
+        $(`#${this.modifyDialogId}`).modal("hide");
+      },
+      modifyProduct(item) {
+        this.isLoading = true;
 
-      }
+        item = {
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          content: item.content,
+          description: item.description,
+          num: item.num,
+          unit: item.unit,
+          origin_price: item.originPrice,
+          price: item.price,
+          is_enabled: item.isEnabled,
+          image: item.imageUrl,
+        };
+
+        apiUtil.modifyProduct(this.$http, item).then((response) => {
+          logger.debug(this, "modifyProduct", response);
+          this.hideModifyDialog();
+          this.isLoading = false;
+          this.getProducts(this.pagination.currentPage)
+        });
+      },
     }
   }
 </script>

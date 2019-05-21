@@ -18,21 +18,50 @@
     "products": "販售商品列表"
   },
   "products": {
-    "newArrivals": "上架新產品",
-    "headers": {
+    "newArrivals": "上架新商品",
+    "tableHeaders": {
       "classification": "分類",
       "productName": "名稱",
-      "originalPrice": "原價",
+      "originalPrice": "定價",
       "price": "售價",
       "status": "狀態",
       "edit": "編輯"
     },
-    "status": {
-      "putOnSale": "上架",
-      "pullOffShelves": "下架"
+    "tableBody": {
+      "status": {
+        "putOnSale": "上架",
+        "pullOffShelves": "下架"
+      },
+      "edit": "編輯"
     },
-    "edit": "編輯",
+    "productDialog": {
+      "imgLink": "輸入圖片網址",
+      "imgLinkHint": "請輸入圖片連結",
+      "imgUplaod": "或 上傳圖片",
+      "title": "品名",
+      "titleHint": "請輸入商品名稱",
+      "category": "分類",
+      "categoryHint": "請設定商品分類",
+      "num": "庫存",
+      "numHint": "請輸入商品庫存",
+      "unit": "單位",
+      "unitHint": "請輸入商品的計數單位",
+      "originPrice": "定價",
+      "originPriceHint": "請輸入商品的定價",
+      "price": "售價",
+      "priceHint": "請輸入商品的售價",
+      "description": "描述",
+      "descriptionHint": "請簡短描述此商品",
+      "content": "說明",
+      "contentHint": "請明細說明此商品",
+      "directlyPutOnSale": "是否直接上架"
+    },
+    "dialogTitles": {
+      "upload": "新增產品",
+      "modify": "修改產品"
+    },
     "NoProducts" : "目前您尚未上架任何商品，請先將商品上架。"
+
 
   }
 }

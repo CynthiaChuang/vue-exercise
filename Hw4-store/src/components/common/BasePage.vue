@@ -10,7 +10,25 @@
   export default {
     name: "BasePage",
 
+    beforeRouteUpdate (to, from, next) {
+      logger.debug(this,"beforeRouteUpdate", to);
+      if (to.meta.requiresAuth) {
+        apiUtil.checkPermission(this.$http).then((response) => {
+          logger.debug(this, "checkPermission", response.data);
+          if (!response.data.success) {
+            routerUtil.gotoLogin(this.$router)
+          }
+        })
+      }
+      next();
+    },
+
     beforeRouteEnter(to, from, next) {
+      logger.debug(this,"beforeRouteEnter", to);
+
+      // does NOT have access to `this` component instance,
+      // because it has not been created yet when this guard is called!
+
       if (to.meta.requiresAuth) {
         next(vm => {
           apiUtil.checkPermission(vm.$http).then((response) => {
@@ -23,6 +41,7 @@
       }
       next();
     },
+
 
   }
 </script>

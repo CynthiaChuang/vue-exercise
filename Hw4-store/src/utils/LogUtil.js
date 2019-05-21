@@ -18,6 +18,9 @@ export default {
     console.error(`[${TAG}][error][${this.getComponentName(vm)}] >`, ...message);
   },
   getComponentName(vm) {
-    return vm.$options ? vm.$options.name : "main"
+    if(!vm || !vm.$options){
+      return "main"
+    }
+    return vm.$options.name
   }
 }

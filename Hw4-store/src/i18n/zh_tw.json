@@ -25,6 +25,7 @@
       "originalPrice": "定價",
       "price": "售價",
       "status": "狀態",
+      "inventory": "庫存",
       "edit": "編輯"
     },
     "tableBody": {
@@ -47,9 +48,9 @@
       "category": "分類",
       "categoryHint": "請設定商品分類",
       "categoryError": "分類不得為空",
-      "num": "庫存",
-      "numHint": "請輸入商品庫存",
-      "numError": "庫存必須為大於等於0的整數",
+      "inventory": "庫存",
+      "inventoryHint": "請輸入商品庫存",
+      "inventoryError": "庫存必須為大於等於0的整數",
       "unit": "單位",
       "unitHint": "請輸入商品的計數單位",
       "originPrice": "定價",

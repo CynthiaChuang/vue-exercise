@@ -67,14 +67,14 @@
 
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="num">{{$t("products.productDialog.num")}}</label>
-                  <input type="number" class="form-control" id="num" name="num"
-                         :class="{'is-invalid':errors.has('num')}"
-                         :placeholder="$t('products.productDialog.numHint')"
-                         v-model="cloneProduct.num"
+                  <label for="inventory">{{$t("products.productDialog.inventory")}}</label>
+                  <input type="number" class="form-control" id="inventory" name="inventory"
+                         :class="{'is-invalid':errors.has('inventory')}"
+                         :placeholder="$t('products.productDialog.inventoryHint')"
+                         v-model="cloneProduct.inventory"
                          v-validate="'required|numeric'">
-                  <span class="text-danger" v-show="errors.has('num')">
-                    {{$t("products.productDialog.numError")}}
+                  <span class="text-danger" v-show="errors.has('inventory')">
+                    {{$t("products.productDialog.inventoryError")}}
                   </span>
                 </div>
 

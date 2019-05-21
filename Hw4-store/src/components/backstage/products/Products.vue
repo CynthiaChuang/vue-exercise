@@ -22,6 +22,7 @@
         <td>{{props.item.title}}</td>
         <td class="text-right">{{props.item.originPrice | separator | dollarSign}}</td>
         <td class="text-right">{{props.item.price | separator | dollarSign}}</td>
+        <td class="text-center">{{props.item.inventory}}</td>
         <td>
           <span v-if="props.item.isEnabled" class="text-success">
             {{$t("products.tableBody.status.putOnSale")}}
@@ -106,6 +107,7 @@
           {name: this.$t("products.tableHeaders.productName"), width: ""},
           {name: this.$t("products.tableHeaders.originalPrice"), width: 120},
           {name: this.$t("products.tableHeaders.price"), width: 120},
+          {name: this.$t("products.tableHeaders.inventory"), width: 80},
           {name: this.$t("products.tableHeaders.status"), width: 100},
           {name: this.$t("products.tableHeaders.edit"), width: 100}
         ]
@@ -129,7 +131,7 @@
                 category: item.category,
                 content: item.content,
                 description: item.description,
-                num: item.num,
+                inventory: item.inventory ? item.inventory : 1,
                 unit: item.unit,
                 originPrice: item.origin_price,
                 price: item.price,
@@ -164,7 +166,7 @@
           category: item.category,
           content: item.content,
           description: item.description,
-          num: item.num,
+          inventory: item.inventory,
           unit: item.unit,
           origin_price: item.originPrice,
           price: item.price,
@@ -199,7 +201,7 @@
           category: item.category,
           content: item.content,
           description: item.description,
-          num: item.num,
+          inventory: item.inventory,
           unit: item.unit,
           origin_price: item.originPrice,
           price: item.price,

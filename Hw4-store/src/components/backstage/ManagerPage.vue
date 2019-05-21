@@ -2,6 +2,7 @@
   <div class="container">
 
     <Navbar></Navbar>
+    <Alert></Alert>
     <div class="margin">
       <router-view></router-view>
     </div>
@@ -10,16 +11,16 @@
 
 <script>
   import Navbar from "./Navbar.vue"
-  import Sidebar from "./Sidebar.vue"
   import BasePage from "@/components/common/BasePage.vue"
+  import Alert from "@/components/common/Alert.vue"
 
   export default {
-    name: "Manager",
+    name: "ManagerPage",
     extends: BasePage,
     components: {
       Navbar,
-      Sidebar
-    },
+      Alert
+    }
   }
 </script>
 

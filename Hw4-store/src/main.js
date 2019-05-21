@@ -5,20 +5,24 @@ import App from './App'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
+import VeeValidate from 'vee-validate'
 import 'bootstrap'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 import router from './router'
 import zh_tw from './i18n/zh_tw.json'
+import './utils/Validate.js'
+import './utils/Bus.js'
 
-
-Vue.use(VueAxios, axios);
 Vue.use(VueI18n);
+Vue.use(VueAxios, axios);
+Vue.use(VeeValidate);
 Vue.component("Loading", Loading);
 
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
+
 
 const i18n = new VueI18n({
   locale: 'zh_tw',
@@ -35,7 +39,6 @@ Vue.filter("separator", function (num) {
 Vue.filter("dollarSign", function (num) {
   return `$${num}`
 });
-
 
 /* eslint-disable no-new */
 new Vue({

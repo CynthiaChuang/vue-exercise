@@ -156,6 +156,7 @@
       },
       uploadProduct(item) {
         this.isLoading = true;
+        this.hideUploadDialog();
 
         item = {
           id: item.id,
@@ -173,7 +174,9 @@
 
         apiUtil.uploadProduct(this.$http, item).then((response) => {
           logger.debug(this, "uploadProduct", response);
-          this.hideUploadDialog();
+          this.$bus.$emit('message:push', `${response.data.message}:${item.title}`,
+            response.data.success ? "success" : "danger");
+
           this.isLoading = false;
           this.getProducts(this.pagination.currentPage)
         });
@@ -188,6 +191,7 @@
       },
       modifyProduct(item) {
         this.isLoading = true;
+        this.hideModifyDialog();
 
         item = {
           id: item.id,
@@ -205,7 +209,9 @@
 
         apiUtil.modifyProduct(this.$http, item).then((response) => {
           logger.debug(this, "modifyProduct", response);
-          this.hideModifyDialog();
+          this.$bus.$emit('message:push', `${response.data.message}:${item.title}`,
+            response.data.success ? "success" : "danger");
+
           this.isLoading = false;
           this.getProducts(this.pagination.currentPage)
         });

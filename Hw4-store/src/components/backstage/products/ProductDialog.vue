@@ -27,8 +27,11 @@
                 <label for="customFile">{{$t("products.productDialog.imgUplaod")}}
                   <i class="fas fa-spinner fa-spin" v-show="isImageUploading"></i>
                 </label>
-                <input type="file" id="customFile" class="form-control"
+                <input type="file" id="customFile" class="form-control" name="file"
+                       :class="{'is-invalid':imageUploadingError.has}"
                        ref="files" @change="uploadImage">
+                <span class="text-danger" v-show="imageUploadingError.has">
+                  {{imageUploadingError.message}}</span>
               </div>
               <img
                 img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -38,26 +41,41 @@
             <div class="col-sm-8">
               <div class="form-group">
                 <label for="title">{{$t("products.productDialog.title")}}</label>
-                <input type="text" class="form-control" id="title"
+                <input type="text" id="title" name="title" class="form-control"
+                       :class="{'is-invalid':errors.has('title')}"
                        :placeholder="$t('products.productDialog.titleHint')"
-                       v-model="cloneProduct.title">
+                       v-model="cloneProduct.title"
+                       v-validate="'required'">
+                <span class="text-danger" v-show="errors.has('title')">
+                  {{$t("products.productDialog.titleError")}}
+                </span>
               </div>
 
 
               <div class="form-group">
                 <label for="category">{{$t("products.productDialog.category")}}</label>
-                <input type="text" class="form-control" id="category"
+                <input type="text" class="form-control" id="category" name="category"
+                       :class="{'is-invalid':errors.has('category')}"
                        :placeholder="$t('products.productDialog.categoryHint')"
-                       v-model="cloneProduct.category">
+                       v-model="cloneProduct.category"
+                       v-validate="'required'">
+                <span class="text-danger" v-show="errors.has('category')">
+                  {{$t("products.productDialog.categoryError")}}
+                </span>
               </div>
 
 
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="num">{{$t("products.productDialog.num")}}</label>
-                  <input type="number" class="form-control" id="num"
+                  <input type="number" class="form-control" id="num" name="num"
+                         :class="{'is-invalid':errors.has('num')}"
                          :placeholder="$t('products.productDialog.numHint')"
-                         v-model="cloneProduct.num">
+                         v-model="cloneProduct.num"
+                         v-validate="'required|numeric'">
+                  <span class="text-danger" v-show="errors.has('num')">
+                    {{$t("products.productDialog.numError")}}
+                  </span>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -71,17 +89,28 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="origin_price">{{$t("products.productDialog.originPrice")}}</label>
-                  <input type="number" class="form-control" id="origin_price"
+                  <input type="number" class="form-control" id="origin_price" name="origin_price"
+                         :class="{'is-invalid':errors.has('origin_price')}"
                          :placeholder="$t('products.productDialog.originPriceHint')"
-                         v-model="cloneProduct.originPrice">
+                         v-model="cloneProduct.originPrice"
+                         v-validate="'required|positive-number'">
+                  <span class="text-danger" v-show="errors.has('origin_price')">
+                    {{$t("products.productDialog.originPriceError")}}
+                  </span>
                 </div>
 
                 <div class="form-group col-md-6">
                   <label for="price">{{$t("products.productDialog.price")}}</label>
-                  <input type="number" class="form-control" id="price"
+                  <input type="number" class="form-control" id="price" name="price"
+                         :class="{'is-invalid':errors.has('price')}"
                          :placeholder="$t('products.productDialog.priceHint')"
-                         v-model="cloneProduct.price">
+                         v-model="cloneProduct.price"
+                         v-validate="'required|positive-number'">
+                  <span class="text-danger" v-show="errors.has('price')">
+                    {{$t("products.productDialog.priceError")}}
+                  </span>
                 </div>
+
               </div>
             </div>
           </div>
@@ -130,11 +159,18 @@
   import apiUtil from "@/utils/ApiUtil.js"
   import logger from "@/utils/LogUtil.js"
 
+  const MAX_FILENAME_LEN = 32 ;
+  const VALID_IMAGE_TYPES = ['image/gif', 'image/jpeg', 'image/png'];
+
   export default {
     name: "ProductDialog",
     data: () => ({
       cloneProduct: {},
-      isImageUploading: false
+      isImageUploading: false,
+      imageUploadingError: {
+        has: false,
+        message:""
+      }
     }),
     props: {
       title: {
@@ -158,11 +194,41 @@
     },
     methods: {
       onDone() {
-        this.$emit("done", this.cloneProduct)
+        this.$validator.validate().then((valid) => {
+          if (valid) {
+            this.$emit("done", this.cloneProduct);
+            this.onCancel();
+          }
+        });
+
+      },
+      isValidImage(img) {
+        let valid = true;
+        let message = "";
+        if (img.name.length >= MAX_FILENAME_LEN) {
+          valid = false;
+          message = this.$t("products.productDialog.imgErrorLen")
+        } else if (img.size >= 1024 * 1024) {
+          valid = false;
+          message = this.$t("products.productDialog.imgErrorSize")
+        } else if (!VALID_IMAGE_TYPES.includes(img.type)) {
+          valid = false;
+          message = this.$t("products.productDialog.imgErrorType")
+        }
+        return {valid, message}
       },
       uploadImage() {
         this.isImageUploading = true;
         const img = this.$refs.files.files[0];
+
+        let {valid, message} = this.isValidImage(img);
+        this.imageUploadingError.has = !valid;
+        this.imageUploadingError.message = message;
+
+        if (!valid) {
+          return
+        }
+
         const formData = new FormData();
         formData.append("file-to-upload", img);
 
@@ -171,11 +237,16 @@
           this.isImageUploading = false;
           if (response.data.success) {
             this.cloneProduct.imageUrl = response.data.imageUrl
+          } else{
+            this.$bus.$emit('message:push',response.data.message, "danger");
           }
         })
       },
       onCancel() {
-        this.cloneProduct = Object.assign({}, this.product)
+        this.cloneProduct = Object.assign({}, this.product);
+        this.errors.clear();
+        this.isImageUploading = false;
+        this.imageUploadingError = {has: false, message: ""}
       }
     }
   }

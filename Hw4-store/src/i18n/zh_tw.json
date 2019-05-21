@@ -1,12 +1,38 @@
 {
   "shopName": "Stationery",
+  "common": {
+    "login": "登入",
+    "logout": "登出",
+    "NoData" : "目前沒有任何資料，請您先新增資料。"
+  },
   "shoppingCart": {
     "shoppingCart": "購物車",
-    "selectedItem":"已選擇商品",
-    "checkOut":"結帳去"
+    "selectedItem": "已選擇商品",
+    "checkOut": "結帳去"
   },
   "login": {
     "error": "帳號密碼錯誤，請再檢查！"
-  }
+  },
+  "manager": {
+    "back": "返回前台",
+    "products": "販售商品列表"
+  },
+  "products": {
+    "newArrivals": "上架新產品",
+    "headers": {
+      "classification": "分類",
+      "productName": "名稱",
+      "originalPrice": "原價",
+      "price": "售價",
+      "status": "狀態",
+      "edit": "編輯"
+    },
+    "status": {
+      "putOnSale": "上架",
+      "pullOffShelves": "下架"
+    },
+    "edit": "編輯",
+    "NoProducts" : "目前您尚未上架任何商品，請先將商品上架。"
 
+  }
 }

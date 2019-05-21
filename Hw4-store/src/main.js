@@ -9,21 +9,31 @@ import 'bootstrap'
 
 import router from './router'
 import zh_tw from './i18n/zh_tw.json'
-import apiUtil from "./utils/ApiUtil.js"
-import logger from "@/utils/LogUtil.js"
-import routerUtil from "@/utils/RouterUtil.js"
 
 Vue.use(VueAxios, axios);
 Vue.use(VueI18n);
 
+
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
-
 
 const i18n = new VueI18n({
   locale: 'zh_tw',
   messages: {zh_tw}
 });
+
+
+Vue.filter("separator", function (num) {
+  const n = Number(num);
+  return `${n.toFixed(0).replace(/./g, (c, i, a) => {
+    return (i && c !== '.' && ((a.length - i) % 3 === 0) ? `, ${c}`.replace(/\s/g, '') : c);
+  })}`;
+});
+
+Vue.filter("dollarSign", function (num) {
+  return `$${num}`
+});
+
 
 /* eslint-disable no-new */
 new Vue({

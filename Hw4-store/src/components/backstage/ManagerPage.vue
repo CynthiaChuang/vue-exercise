@@ -2,8 +2,7 @@
   <div class="container">
 
     <Navbar></Navbar>
-
-    <div class="margin-top">
+    <div class="margin">
       <router-view></router-view>
     </div>
   </div>
@@ -25,7 +24,8 @@
 </script>
 
 <style scoped>
-  .margin-top {
+  .margin {
     margin-top: 120px;
+    margin-bottom: 120px;
   }
 </style>

@@ -6,8 +6,9 @@ import HomePage from '@/components/forestage/home/HomePage.vue'
 import ForeFooter from '@/components/forestage/Footer.vue'
 
 import ManagerPage from '@/components/backstage/ManagerPage.vue'
-import Orders from '@/components/backstage/order/Orders.vue'
 import BackFooter from '@/components/backstage/Footer.vue'
+import Orders from '@/components/backstage/order/Orders.vue'
+import Products from '@/components/backstage/products/Products.vue'
 
 Vue.use(Router);
 
@@ -51,6 +52,17 @@ export default new Router({
             requiresAuth: true
           },
         },
+        {
+
+          path: "products",
+          component: Products,
+          name: "Products",
+          meta: {
+            requiresAuth: true
+          },
+        },
+
+
       ]
 
     }

@@ -10,5 +10,14 @@ export default {
   checkPermission(http) {
     const API = `${process.env.SERVER_URL}/api/user/check`;
     return http.post(API)
+  },
+  getProducts(http, page) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/products`;
+    if (page) {
+      API = API + `?page=${page}`
+    }
+
+    return http.get(API)
   }
+
 }

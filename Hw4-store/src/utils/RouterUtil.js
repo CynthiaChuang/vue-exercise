@@ -1,6 +1,9 @@
-import router from "../router";
-
 export default {
+  gotoProducts(router, replace = false) {
+    this._goto(router, replace, {
+      name: "Products"
+    })
+  },
   gotoManagerPage(router, replace = false) {
     this._goto(router, replace, {
       name: "Orders"

@@ -23,6 +23,19 @@ export default {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product/${product.id}`;
     return http.put(API, {data: product})
   },
+  async modifyBatchProducts(http, idx = 0, products = [], message = [], callback) {
+    if (idx >= products.length) {
+      callback(message);
+      return
+    }
+    await this.modifyProduct(http, products[idx]).then((response) => {
+      console.log("modifyProduct", response);
+      response.data.name = products[idx].title;
+      message.push(response.data);
+    });
+
+    await this.modifyBatchProducts(http, idx + 1, products, message, callback);
+  },
   uploadImage(http, formData) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/upload`;
     return http.post(API, formData, {

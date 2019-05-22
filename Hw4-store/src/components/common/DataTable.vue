@@ -118,7 +118,10 @@
     },
     watch: {
       checkedValues() {
-        this.isCheckAll = this.checkedValues.length === this.tableItem.length
+        this.isCheckAll = this.checkedValues.length === this.tableItem.length;
+      },
+      tableItem(){
+        this.checkedValues = [];
       }
     }
   }
@@ -143,4 +146,4 @@
     font-weight: 900;
     content: '\f14a';
   }
- </style>
+</style>

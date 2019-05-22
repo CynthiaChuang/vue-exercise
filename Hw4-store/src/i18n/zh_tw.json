@@ -20,6 +20,7 @@
   "products": {
     "buttons": {
       "add": "新增",
+      "refresh": "重整",
       "putOnSale": "上架",
       "pullOffShelves": "下架",
       "delete": "刪除"
@@ -79,8 +80,17 @@
       "success": "已刪除全部產品",
       "fail": "刪除失敗",
       "someFail": "部份產品刪除失敗"
+    },
+    "pullOffError": {
+      "success": "已將選定產品下架",
+      "fail": "下架失敗",
+      "someFail": "部份產品下架失敗"
+    },
+    "putOnSaleError":{
+      "success": "已將選定產品上架",
+      "fail": "上架失敗",
+      "someFail": "部份產品上架失敗"
     }
-
 
   }
 }

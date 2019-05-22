@@ -6,7 +6,7 @@
 
     <div class="row mt-4 container justify-content-end ">
       <a v-for="(btn,idx) in buttons" :key="idx"
-         href="#" @click.prevent="showUploadDialog"
+         href="#" @click.prevent="btn.action"
          class="btn btn-sm ml-2"
          :class="getButtonClass(btn.highlight,btn.disabled )">
         <i :class="btn.icon"></i>
@@ -115,7 +115,7 @@
         },
         (val) => {
           this.buttons.forEach((item) => {
-            if (item.name !== this.$t("products.buttons.add")) {
+            if (item.name !== this.$t("products.buttons.add") &&  item.name !== this.$t("products.buttons.refresh")) {
               item.disabled = val === 0;
             }
           })
@@ -140,28 +140,35 @@
             disabled: false,
             highlight: true,
             icon: ["fas", "fa-plus"],
-            func: this.showUploadDialog
+            action: this.showUploadDialog
+          },
+          {
+            name: this.$t("products.buttons.refresh"),
+            disabled: false,
+            highlight: false,
+            icon: ["fas", "fa-sync"],
+            action: this.refresh
           },
           {
             name: this.$t("products.buttons.putOnSale"),
             highlight: false,
             disabled: true,
             icon: ["fas", "fa-upload"],
-            func: this.showUploadDialog
+            action: this.putProductsOnSale
           },
           {
             name: this.$t("products.buttons.pullOffShelves"),
             highlight: false,
             disabled: true,
             icon: ["fas", "fa-download"],
-            func: this.pullOffProducts
+            action: this.pullOffProducts
           },
           {
             name: this.$t("products.buttons.delete"),
             highlight: false,
             disabled: true,
             icon: ["far", "fa-trash-alt"],
-            func: this.deleteProducts
+            action: this.deleteBatchProducts
           }]
       },
       getButtonClass(highlight, disabled) {
@@ -288,14 +295,14 @@
           this.getProducts(this.pagination.currentPage)
         });
       },
-      deleteProducts() {
+      deleteBatchProducts() {
         this.isLoading = true;
         let deleteItems = this.$refs.productsTable.checkedValues.map((item) => {
           return {id: item.id, title: item.title}
         });
 
         apiUtil.deleteBatchProducts(this.$http, 0, deleteItems, [], (responses) => {
-          logger.debug(this, "callback", responses);
+          logger.debug(this, "deleteBatchProducts", responses);
 
           let failed = [];
 
@@ -323,10 +330,84 @@
       },
       pullOffProducts(){
         this.isLoading = true;
-        let pullOffItems = this.$refs.productsTable.checkedValues
-    
-      }
+        let items = this.$refs.productsTable.checkedValues
+          .filter((item) => {
+            return item.isEnabled
+          })
+          .map((item) => {
+            return {
+              id: item.id,
+              title: item.title,
+              category: item.category,
+              content: item.content,
+              description: item.description,
+              inventory: item.inventory,
+              unit: item.unit,
+              origin_price: item.originPrice,
+              price: item.price,
+              is_enabled: false,
+              image: item.imageUrl,
+            };
+          });
+        this.isLoading = false;
+        this.modifyBatchProducts(items, "pullOffError");
+      },
+      putProductsOnSale(){
+        this.isLoading = true;
+        let items = this.$refs.productsTable.checkedValues
+          .filter((item) => {
+            return !item.isEnabled
+          })
+          .map((item) => {
+            return {
+              id: item.id,
+              title: item.title,
+              category: item.category,
+              content: item.content,
+              description: item.description,
+              inventory: item.inventory,
+              unit: item.unit,
+              origin_price: item.originPrice,
+              price: item.price,
+              is_enabled: true,
+              image: item.imageUrl,
+            };
+          });
+        this.isLoading = false;
+        this.modifyBatchProducts(items, "putOnSaleError");
+      },
+      modifyBatchProducts(items, messageType = 'pullOffError') {
+        this.isLoading = true;
+        apiUtil.modifyBatchProducts(this.$http, 0, items, [], (responses) => {
+          logger.debug(this, "modifyBatchProducts", responses);
 
+          let failed = [];
+          for (let res of responses) {
+            if (!res.message) {
+              failed.push(res.title);
+            }
+          }
+
+          let alertStyle = failed.length <= 0 ? "success" : "danger";
+          let message = "";
+          if (failed.length === 0) {
+            message = this.$t(`products.${messageType}.success`);
+
+          } else if (failed.length > 0 && failed.length !== items.length) {
+            message = `${this.$t(`products.${messageType}..someFail`)}:${failed}`;
+
+          } else {
+            message = this.$t(`products.${messageType}.fail`);
+          }
+
+          this.pushAlertMessage(message, alertStyle);
+          this.isLoading = false;
+          this.getProducts(this.pagination.currentPage)
+        })
+      },
+      refresh(){
+        this.getProducts(this.pagination.currentPage)
+      }
     }
   }
 </script>

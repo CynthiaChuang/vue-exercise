@@ -34,5 +34,23 @@ export default {
   uploadProduct(http, product) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product`;
     return http.post(API, {data: product})
+  },
+  deleteProduct(http, id) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product/${id}`;
+    return http.delete(API)
+  },
+  async deleteBatchProducts(http, idx = 0, items = [], message = [], callback) {
+    if (idx >= items.length) {
+      callback(message);
+      return
+    }
+    await this.deleteProduct(http, items[idx].id).then((response) => {
+      console.log("deleteProduct", response);
+      response.data.name = items[idx].title;
+      message.push(response.data);
+    });
+
+    await this.deleteBatchProducts(http, idx + 1, items, message, callback);
   }
+
 }

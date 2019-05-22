@@ -18,7 +18,7 @@
       <tr>
         <th>
           <label class="fontawesome-checkbox">
-            <input type="checkbox" name="chk_all" :id="item.id" :value="item.id" v-model="checkedValues">
+            <input type="checkbox" name="chk_all" :id="item.id" :value="item" v-model="checkedValues">
             <span></span>
           </label>
         </th>
@@ -101,12 +101,11 @@
     methods: {
       checkAllEvent() {
         if (this.isCheckAll) {
-          for (let index in this.tableItem) {
-            let id = this.tableItem[index].id;
-            if (this.checkedValues.indexOf(id) < 0) {
-              this.checkedValues.push(id);
+          this.tableItem.forEach((item) => {
+            if (this.checkedValues.indexOf(item) < 0) {
+              this.checkedValues.push(item);
             }
-          }
+          });
         } else {
           this.checkedValues = [];
         }
@@ -144,7 +143,4 @@
     font-weight: 900;
     content: '\f14a';
   }
-
-
-
  </style>

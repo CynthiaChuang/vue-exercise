@@ -18,7 +18,11 @@
     "products": "販售商品列表"
   },
   "products": {
-    "newArrivals": "上架新商品",
+    "buttons": {
+      "putOnSale": "上架新商品",
+      "pullOffShelves": "下架商品",
+      "delete": "刪除商品"
+    },
     "tableHeaders": {
       "classification": "分類",
       "productName": "名稱",
@@ -69,7 +73,12 @@
       "upload": "新增產品",
       "modify": "修改產品"
     },
-    "NoProducts" : "目前您尚未上架任何商品，請先將商品上架。"
+    "NoProducts" : "目前您尚未上架任何商品，請先將商品上架。",
+    "deleteError": {
+      "success": "已刪除全部產品",
+      "fail": "刪除失敗",
+      "someFail": "部份產品刪除失敗"
+    }
 
 
   }

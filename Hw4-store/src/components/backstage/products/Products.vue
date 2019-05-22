@@ -2,16 +2,27 @@
   <div>
     <loading :active.sync="isLoading"></loading>
 
-    <div class="row flex-nowrap justify-content-between align-items-center">
-      <h2 class="col-9">{{$t("manager.products")}}</h2>
-      <div class="col-2 d-flex justify-content-end ">
-        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
-          {{$t("products.newArrivals")}}
-        </a>
-      </div>
+    <h2>{{$t("manager.products")}}</h2>
+
+    <div class="row mt-4 container justify-content-end">
+      <a class="btn btn-sm btn-outline-secondary" href="#" @click.prevent="showUploadDialog">
+        <i class="fas fa-upload"></i>
+        {{$t("products.buttons.putOnSale")}}
+      </a>
+
+      <a class="btn btn-sm btn-outline-primary ml-2" href="#" @click.prevent="showUploadDialog">
+        <i class="fas fa-download"></i>
+        {{$t("products.buttons.pullOffShelves")}}
+      </a>
+
+      <a class="btn btn-sm btn-outline-primary ml-2" href="#" @click.prevent="deleteProducts">
+        <i class="far fa-trash-alt"></i>
+        {{$t("products.buttons.delete")}}
+      </a>
     </div>
 
     <DataTable
+      ref="productsTable"
       :headers="headers"
       :tableItem="products"
       :pagination="pagination"
@@ -43,7 +54,7 @@
         <p class="text-center mt-3" style="color:rgba(108,117,125,0.38);">
           {{$t("products.NoProducts")}}</p>
         <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
-          {{$t("products.newArrivals")}}</a>
+          {{$t("products.buttons.putOnSale")}}</a>
       </div>
 
     </DataTable>
@@ -100,6 +111,9 @@
       this.initHeaders();
     },
     methods: {
+      pushAlertMessage(message = "", style = "warning") {
+        this.$bus.$emit('message:push', message, style);
+      },
       initHeaders() {
         // TODO:庫存
         this.headers = [
@@ -176,7 +190,7 @@
 
         apiUtil.uploadProduct(this.$http, item).then((response) => {
           logger.debug(this, "uploadProduct", response);
-          this.$bus.$emit('message:push', `${response.data.message}:${item.title}`,
+          this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
 
           this.isLoading = false;
@@ -211,13 +225,47 @@
 
         apiUtil.modifyProduct(this.$http, item).then((response) => {
           logger.debug(this, "modifyProduct", response);
-          this.$bus.$emit('message:push', `${response.data.message}:${item.title}`,
+          this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
 
           this.isLoading = false;
           this.getProducts(this.pagination.currentPage)
         });
       },
+      deleteProducts() {
+        this.isLoading = true;
+        let deleteItems = this.$refs.productsTable.checkedValues.map((item) => {
+          return {id: item.id, title: item.title}
+        });
+
+        apiUtil.deleteBatchProducts(this.$http, 0, deleteItems, [], (responses) => {
+          logger.debug(this, "callback", responses);
+
+          let failed = [];
+
+          for (let res of responses) {
+            if (!res.message) {
+              failed.push(res.title);
+            }
+          }
+
+          let alertStyle = failed.length <= 0 ? "success" : "danger";
+          let message = "";
+          if (failed.length === 0) {
+            message = this.$t("products.deleteError.success");
+          } else if (failed.length > 0 && failed.length !== deleteItems.length) {
+            message = `${this.$t("products.deleteError.someFail")}:${failed}`;
+          } else {
+            message = this.$t("products.deleteError.fail");
+          }
+
+          this.pushAlertMessage(message, alertStyle);
+
+          this.isLoading = false;
+          this.getProducts(this.pagination.currentPage)
+        });
+      },
+
     }
   }
 </script>

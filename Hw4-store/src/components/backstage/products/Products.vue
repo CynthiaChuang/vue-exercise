@@ -35,7 +35,7 @@
           <span v-else>{{$t("products.tableBody.status.pullOffShelves")}}</span>
         </td>
         <td>
-          <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent="showModifyDialog(props.item)">
+          <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent.stop="showModifyDialog(props.item)">
             {{$t("products.tableBody.edit")}}
           </a>
         </td>

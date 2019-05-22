@@ -15,9 +15,9 @@
       </thead>
 
       <tbody v-if="tableItem.length >0" v-for="(item) in tableItem" :key="item.id">
-      <tr>
+      <tr @click="onRowClick(item)">
         <th>
-          <label class="fontawesome-checkbox">
+          <label class="fontawesome-checkbox" @click.prevent="doNothing">
             <input type="checkbox" name="chk_all" :id="item.id" :value="item" v-model="checkedValues">
             <span></span>
           </label>
@@ -114,7 +114,17 @@
         this.$emit("pageTurning", this.pagination.currentPage, index);
         this.isCheckAll = false;
         this.checkedValues = [];
-      }
+      },
+      onRowClick(item){
+        let index = this.checkedValues.indexOf(item);
+
+        if (index < 0) {
+          this.checkedValues.push(item);
+        } else {
+          this.checkedValues.splice(index, 1)
+        }
+      },
+      doNothing(){}
     },
     watch: {
       checkedValues() {

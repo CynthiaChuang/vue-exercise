@@ -3,7 +3,11 @@
   "common": {
     "login": "登入",
     "logout": "登出",
-    "NoData" : "目前沒有任何資料，請您先新增資料。"
+    "NoData" : "目前沒有任何資料，請您先新增資料。",
+    "buttons": {
+      "add": "新增",
+      "refresh": "重整"
+    }
   },
   "shoppingCart": {
     "shoppingCart": "購物車",
@@ -15,12 +19,11 @@
   },
   "manager": {
     "back": "返回前台",
-    "products": "販售商品列表"
+    "products": "販售商品列表",
+    "orders": "訂單檢視"
   },
   "products": {
     "buttons": {
-      "add": "新增",
-      "refresh": "重整",
       "putOnSale": "上架",
       "pullOffShelves": "下架",
       "delete": "刪除"
@@ -91,6 +94,19 @@
       "fail": "上架失敗",
       "someFail": "部份產品上架失敗"
     }
-
+    },
+  "orders": {
+    "tableHeaders": {
+      "id": "#",
+      "timestamp": "購買日",
+      "userName": "購買人",
+      "email": "email",
+      "total": "總金額",
+      "view": "檢視",
+      "status": "狀態"
+    },
+    "NoOrders" : "目前您還沒有任何的訂單，要不先維護商品列表？",
+    "gotoProducts": "維護商品列表",
+    "dialogTitles": "檢視訂單"
   }
 }

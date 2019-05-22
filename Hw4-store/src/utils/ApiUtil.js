@@ -64,6 +64,14 @@ export default {
     });
 
     await this.deleteBatchProducts(http, idx + 1, items, message, callback);
-  }
+  },
+  getOrders(http, page) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/orders`;
+    if (page) {
+      API = API + `?page=${page}`
+    }
+
+    return http.get(API)
+  },
 
 }

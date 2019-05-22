@@ -1,13 +1,16 @@
 export default {
+  gotoOrders(router, replace = false) {
+    this._goto(router, replace, {
+      name: "Orders"
+    })
+  },
   gotoProducts(router, replace = false) {
     this._goto(router, replace, {
       name: "Products"
     })
   },
   gotoManagerPage(router, replace = false) {
-    this._goto(router, replace, {
-      name: "Orders"
-    })
+    this.gotoOrders(router, replace)
   },
   gotoHomePage(router, replace = false) {
     this._goto(router, replace, {

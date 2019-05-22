@@ -1,39 +1,40 @@
 <template>
   <div>
-    <table class="table mt-4">
+    <table class="table  mt-4">
       <thead>
-      <tr>
-        <th>
-          <label class="fontawesome-checkbox">
-            <input type="checkbox" name="chk_all" v-model="isCheckAll" @change="checkAllEvent"/>
-            <span></span>
-          </label>
-        </th>
+        <tr>
+          <th>
+            <label class="fontawesome-checkbox">
+              <input type="checkbox" name="chk_all" v-model="isCheckAll" @change="checkAllEvent"/>
+              <span></span>
+            </label>
+          </th>
 
-        <th v-for="(item,key) in headers" :key="key" :width="item.width">{{item.name}}</th>
-      </tr>
+          <th v-for="(item,key) in headers" :key="key" :width="item.width">{{item.name}}</th>
+        </tr>
       </thead>
 
-      <tbody v-if="tableItem.length >0" v-for="(item) in tableItem" :key="item.id">
-      <tr @click="onRowClick(item)">
-        <th>
-          <label class="fontawesome-checkbox" @click.prevent="doNothing">
-            <input type="checkbox" name="chk_all" :id="item.id" :value="item" v-model="checkedValues">
-            <span></span>
-          </label>
-        </th>
+      <tbody>
+        <tr v-if="tableItem.length >0" v-for="(item) in tableItem" :key="item.id"
+             @click="onRowClick(item)">
+          <th>
+            <label class="fontawesome-checkbox" @click.prevent="doNothing">
+              <input type="checkbox" name="chk_all" :id="item.id" :value="item" v-model="checkedValues">
+              <span></span>
+            </label>
+          </th>
 
-        <slot :item="item">
-          <td>{{item.category}}</td>
-          <td>{{item.title}}</td>
-          <td>{{item.originPrice}} | separator</td>
-          <td>{{item.price}}</td>
-          <td>{{item.isEnabled}}</td>
-          <td>
-            <a class="btn btn-sm btn-outline-primary" href="#">編輯</a>
-          </td>
-        </slot>
-      </tr>
+          <slot :item="item">
+            <td>{{item.category}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.originPrice}} | separator</td>
+            <td>{{item.price}}</td>
+            <td>{{item.isEnabled}}</td>
+            <td>
+              <a class="btn btn-sm btn-outline-primary" href="#">編輯</a>
+            </td>
+          </slot>
+        </tr>
       </tbody>
     </table>
 
@@ -115,7 +116,7 @@
         this.isCheckAll = false;
         this.checkedValues = [];
       },
-      onRowClick(item){
+      onRowClick(item) {
         let index = this.checkedValues.indexOf(item);
 
         if (index < 0) {
@@ -124,13 +125,14 @@
           this.checkedValues.splice(index, 1)
         }
       },
-      doNothing(){}
+      doNothing() {
+      }
     },
     watch: {
       checkedValues() {
         this.isCheckAll = this.checkedValues.length === this.tableItem.length;
       },
-      tableItem(){
+      tableItem() {
         this.checkedValues = [];
       }
     }

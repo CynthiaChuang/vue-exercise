@@ -49,7 +49,7 @@
           {{$t("products.NoProducts")}}</p>
         <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
           <i class="fas fa-plus"></i>
-          {{$t("products.buttons.add")}}
+          {{$t("common.buttons.add")}}
         </a>
       </div>
 
@@ -115,7 +115,7 @@
         },
         (val) => {
           this.buttons.forEach((item) => {
-            if (item.name !== this.$t("products.buttons.add") &&  item.name !== this.$t("products.buttons.refresh")) {
+            if (item.name !== this.$t("common.buttons.add") &&  item.name !== this.$t("common.buttons.refresh")) {
               item.disabled = val === 0;
             }
           })
@@ -136,14 +136,14 @@
       initButtons() {
         this.buttons = [
           {
-            name: this.$t("products.buttons.add"),
+            name: this.$t("common.buttons.add"),
             disabled: false,
             highlight: true,
             icon: ["fas", "fa-plus"],
             action: this.showUploadDialog
           },
           {
-            name: this.$t("products.buttons.refresh"),
+            name: this.$t("common.buttons.refresh"),
             disabled: false,
             highlight: false,
             icon: ["fas", "fa-sync"],

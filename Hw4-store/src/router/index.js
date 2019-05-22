@@ -7,7 +7,7 @@ import ForeFooter from '@/components/forestage/Footer.vue'
 
 import ManagerPage from '@/components/backstage/ManagerPage.vue'
 import BackFooter from '@/components/backstage/Footer.vue'
-import Orders from '@/components/backstage/order/Orders.vue'
+import Orders from '@/components/backstage/orders/Orders.vue'
 import Products from '@/components/backstage/products/Products.vue'
 
 Vue.use(Router);

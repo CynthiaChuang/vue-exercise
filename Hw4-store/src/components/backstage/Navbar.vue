@@ -54,9 +54,9 @@
               }
             },
             {
-              name: "Random feature",
+              name: this.$t("manager.orders"),
               action: () => {
-
+                routerUtil.gotoOrders(this.$router);
               }
             },
             {

@@ -6,7 +6,8 @@
     "NoData" : "目前沒有任何資料，請您先新增資料。",
     "buttons": {
       "add": "新增",
-      "refresh": "重整"
+      "refresh": "重整",
+      "delete": "刪除"
     }
   },
   "shoppingCart": {
@@ -20,7 +21,8 @@
   "manager": {
     "back": "返回前台",
     "products": "販售商品列表",
-    "orders": "訂單檢視"
+    "orders": "訂單管理",
+    "coupons": "優惠券"
   },
   "products": {
     "buttons": {
@@ -78,7 +80,10 @@
       "upload": "新增產品",
       "modify": "修改產品"
     },
-    "NoProducts" : "目前您尚未上架任何商品，請先將商品上架。",
+    "noProducts" :{
+      "message": "目前您尚未上架任何商品，請先將商品上架。",
+      "btn": "上架新商品"
+    },
     "deleteError": {
       "success": "已刪除全部產品",
       "fail": "刪除失敗",
@@ -105,8 +110,28 @@
       "view": "檢視",
       "status": "狀態"
     },
-    "NoOrders" : "目前您還沒有任何的訂單，要不先維護商品列表？",
-    "gotoProducts": "維護商品列表",
+    "noOrders":{
+      "message":  "目前您還沒有任何的訂單，要不先維護商品列表？",
+      "btn": "維護商品列表"
+    },
     "dialogTitles": "檢視訂單"
+  },
+  "coupons": {
+    "tableHeaders": {
+      "title": "優惠券名稱",
+      "code": "優惠碼",
+      "percent" :"折扣",
+      "dueDate": "有效日期",
+      "status": "狀態",
+      "edit": "編輯"
+    },
+    "buttons": {
+      "give": "發放",
+      "cancel": "取消"
+    },
+    "noCoupons" :{
+      "message": "目前您還沒有新增任何的優惠券，請先新增",
+      "btn": "新增優惠券"
+    }
   }
 }

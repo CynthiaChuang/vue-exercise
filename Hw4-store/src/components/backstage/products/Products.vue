@@ -46,10 +46,10 @@
           <i class="fas fa-box-open fa-4x" style="color:rgba(108,117,125,0.31);"></i>
         </div>
         <p class="text-center mt-3" style="color:rgba(108,117,125,0.38);">
-          {{$t("products.NoProducts")}}</p>
+          {{$t("products.noProducts.message")}}</p>
         <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
           <i class="fas fa-plus"></i>
-          {{$t("common.buttons.add")}}
+          {{$t("products.noProducts.btn")}}
         </a>
       </div>
 
@@ -139,35 +139,35 @@
             name: this.$t("common.buttons.add"),
             disabled: false,
             highlight: true,
-            icon: ["fas", "fa-plus"],
+            icon: ["fas fa-plus"],
             action: this.showUploadDialog
           },
           {
             name: this.$t("common.buttons.refresh"),
             disabled: false,
             highlight: false,
-            icon: ["fas", "fa-sync"],
+            icon: ["fas fa-sync"],
             action: this.refresh
           },
           {
             name: this.$t("products.buttons.putOnSale"),
             highlight: false,
             disabled: true,
-            icon: ["fas", "fa-upload"],
+            icon: ["fas fa-upload"],
             action: this.putProductsOnSale
           },
           {
             name: this.$t("products.buttons.pullOffShelves"),
             highlight: false,
             disabled: true,
-            icon: ["fas", "fa-download"],
+            icon: ["fas fa-download"],
             action: this.pullOffProducts
           },
           {
-            name: this.$t("products.buttons.delete"),
+            name: this.$t("common.buttons.delete"),
             highlight: false,
             disabled: true,
-            icon: ["far", "fa-trash-alt"],
+            icon: ["far fa-trash-alt"],
             action: this.deleteBatchProducts
           }]
       },

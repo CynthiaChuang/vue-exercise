@@ -9,6 +9,7 @@ import ManagerPage from '@/components/backstage/ManagerPage.vue'
 import BackFooter from '@/components/backstage/Footer.vue'
 import Orders from '@/components/backstage/orders/Orders.vue'
 import Products from '@/components/backstage/products/Products.vue'
+import Coupons from '@/components/backstage/coupons/Coupons.vue'
 
 Vue.use(Router);
 
@@ -61,9 +62,15 @@ export default new Router({
             requiresAuth: true
           },
         },
+        {
 
-
-      ]
+          path: "coupons",
+          component: Coupons,
+          name: "Coupons",
+          meta: {
+            requiresAuth: true
+          },
+        }]
 
     }
   ]

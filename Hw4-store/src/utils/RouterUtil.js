@@ -1,4 +1,9 @@
 export default {
+  gotoCoupons(router, replace = false) {
+    this._goto(router, replace, {
+      name: "Coupons"
+    })
+  },
   gotoOrders(router, replace = false) {
     this._goto(router, replace, {
       name: "Orders"

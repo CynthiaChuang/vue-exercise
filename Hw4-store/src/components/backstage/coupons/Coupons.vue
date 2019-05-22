@@ -2,7 +2,7 @@
   <div>
     <loading :active.sync="isLoading"></loading>
 
-    <h2>{{$t("manager.orders")}}</h2>
+    <h2>{{$t("manager.coupons")}}</h2>
 
     <div class="row mt-4 container justify-content-end ">
       <a v-for="(btn,idx) in buttons" :key="idx"
@@ -18,7 +18,7 @@
     <DataTable
       ref="ordersTable"
       :headers="headers"
-      :tableItem="orders"
+      :tableItem="coupons"
       :pagination="pagination"
       @pageTurning="pageTurning">
 
@@ -43,20 +43,20 @@
 
       <div slot="no-data" class="text-center mt-5">
         <div>
-          <i class="far fa-file-alt fa-4x" style="color:rgba(108,117,125,0.31);"></i>
+          <i class="fas fa-file-invoice-dollar fa-4x" style="color:rgba(108,117,125,0.31);"></i>
         </div>
         <p class="text-center mt-3" style="color:rgba(108,117,125,0.38);">
-          {{$t("orders.noOrders.message")}}</p>
+          {{$t("coupons.noCoupons.message")}}</p>
         <a class="btn btn-sm btn-secondary" href="#" @click.prevent="gotoProducts">
-          <i class="fas fa-box-open"></i>
-          {{$t("orders.noOrders.btn")}}
+          <i class="fas fa-plus"></i>
+          {{$t("coupons.noCoupons.btn")}}
         </a>
       </div>
 
     </DataTable>
 
     <!-- Modify Dialog -->
-    <OrderDialog
+    <CouponDialog
       :dialogId="orderDialogId"
       :title="$t('orders.dialogTitles')"
       :product="modifyItem"
@@ -74,13 +74,13 @@
   import routerUtil from "@/utils/RouterUtil.js"
 
   import DataTable from "@/components/common/DataTable.vue"
-  import OrderDialog from "./OrderDialog.vue"
+  import CouponDialog from "./CouponDialog.vue"
 
   export default {
-    name: "Orders",
+    name: "Coupons",
     components: {
       DataTable,
-      OrderDialog
+      CouponDialog
     },
     data: () => ({
       pagination: {
@@ -89,7 +89,7 @@
         hasNext: false,
         hasPre: false,
       },
-      orders: [],
+      coupons: [],
       headers: [],
       isLoading: false,
       orderDialogId: "orderDialog",
@@ -104,22 +104,49 @@
     methods: {
       initHeaders() {
         this.headers = [
-          {name: this.$t("orders.tableHeaders.id"), width: 120},
-          {name: this.$t("orders.tableHeaders.timestamp"), width: 120},
-          {name: this.$t("orders.tableHeaders.userName"), width: 120},
-          {name: this.$t("orders.tableHeaders.email"), width: ""},
-          {name: this.$t("orders.tableHeaders.total"), width: 100},
-          {name: this.$t("orders.tableHeaders.status"), width: 100},
-          {name: this.$t("orders.tableHeaders.view"), width: 100}
+          {name: this.$t("coupons.tableHeaders.title"), width: ""},
+          {name: this.$t("coupons.tableHeaders.code"), width: 120},
+          {name: this.$t("coupons.tableHeaders.percent"), width: 120},
+          {name: this.$t("coupons.tableHeaders.dueDate"), width: ""},
+          {name: this.$t("coupons.tableHeaders.status"), width: 100},
+          {name: this.$t("coupons.tableHeaders.edit"), width: 100}
         ]
       },
       initButtons() {
         this.buttons = [
           {
+            name: this.$t("common.buttons.add"),
+            disabled: false,
+            highlight: true,
+            icon: ["fas fa-plus"],
+            action: this.refresh
+          },
+          {
             name: this.$t("common.buttons.refresh"),
             disabled: false,
             highlight: false,
             icon: ["fas fa-sync"],
+            action: this.refresh
+          },
+          {
+            name: this.$t("coupons.buttons.give"),
+            disabled: true,
+            highlight: false,
+            icon: ["fas fa-dollar-sign"],
+            action: this.refresh
+          },
+          {
+            name: this.$t("coupons.buttons.cancel"),
+            disabled: true,
+            highlight: false,
+            icon: ["fas fa-strikethrough"],
+            action: this.refresh
+          },
+          {
+            name: this.$t("common.buttons.delete"),
+            disabled: true,
+            highlight: false,
+            icon: ["far fa-trash-alt"],
             action: this.refresh
           }
           ]

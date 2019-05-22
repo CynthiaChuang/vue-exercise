@@ -60,15 +60,9 @@
               }
             },
             {
-              name: "Team feature",
+              name: this.$t("manager.coupons"),
               action: () => {
-
-              }
-            },
-            {
-              name: "Stuff for developers",
-              action: () => {
-
+                routerUtil.gotoCoupons(this.$router);
               }
             }],
           Resources: [

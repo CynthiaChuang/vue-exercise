@@ -4,21 +4,15 @@
 
     <h2>{{$t("manager.products")}}</h2>
 
-    <div class="row mt-4 container justify-content-end">
-      <a class="btn btn-sm btn-outline-secondary" href="#" @click.prevent="showUploadDialog">
-        <i class="fas fa-upload"></i>
-        {{$t("products.buttons.putOnSale")}}
+    <div class="row mt-4 container justify-content-end ">
+      <a v-for="(btn,idx) in buttons" :key="idx"
+         href="#" @click.prevent="showUploadDialog"
+         class="btn btn-sm ml-2"
+         :class="getButtonClass(btn.highlight,btn.disabled )">
+        <i :class="btn.icon"></i>
+        {{btn.name}}
       </a>
 
-      <a class="btn btn-sm btn-outline-primary ml-2" href="#" @click.prevent="showUploadDialog">
-        <i class="fas fa-download"></i>
-        {{$t("products.buttons.pullOffShelves")}}
-      </a>
-
-      <a class="btn btn-sm btn-outline-primary ml-2" href="#" @click.prevent="deleteProducts">
-        <i class="far fa-trash-alt"></i>
-        {{$t("products.buttons.delete")}}
-      </a>
     </div>
 
     <DataTable
@@ -54,7 +48,9 @@
         <p class="text-center mt-3" style="color:rgba(108,117,125,0.38);">
           {{$t("products.NoProducts")}}</p>
         <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showUploadDialog">
-          {{$t("products.buttons.putOnSale")}}</a>
+          <i class="fas fa-plus"></i>
+          {{$t("products.buttons.add")}}
+        </a>
       </div>
 
     </DataTable>
@@ -104,18 +100,29 @@
       isLoading: false,
       uploadDialogId: "uploadDialog",
       modifyDialogId: "modifyDialog",
-      modifyItem: {}
+      modifyItem: {},
+      buttons:[],
     }),
     created() {
       this.getProducts();
       this.initHeaders();
+      this.initButtons();
+    },
+    mounted () {
+      this.$watch(
+        () => {
+          return this.$refs.productsTable.checkedValues.length
+        },
+        (val) => {
+          this.buttons.forEach((item) => {
+            if (item.name !== this.$t("products.buttons.add")) {
+              item.disabled = val === 0;
+            }
+          })
+        })
     },
     methods: {
-      pushAlertMessage(message = "", style = "warning") {
-        this.$bus.$emit('message:push', message, style);
-      },
       initHeaders() {
-        // TODO:庫存
         this.headers = [
           {name: this.$t("products.tableHeaders.classification"), width: 120},
           {name: this.$t("products.tableHeaders.productName"), width: ""},
@@ -125,6 +132,55 @@
           {name: this.$t("products.tableHeaders.status"), width: 100},
           {name: this.$t("products.tableHeaders.edit"), width: 100}
         ]
+      },
+      initButtons() {
+        this.buttons = [
+          {
+            name: this.$t("products.buttons.add"),
+            disabled: false,
+            highlight: true,
+            icon: ["fas", "fa-plus"],
+            func: this.showUploadDialog
+          },
+          {
+            name: this.$t("products.buttons.putOnSale"),
+            highlight: false,
+            disabled: true,
+            icon: ["fas", "fa-upload"],
+            func: this.showUploadDialog
+          },
+          {
+            name: this.$t("products.buttons.pullOffShelves"),
+            highlight: false,
+            disabled: true,
+            icon: ["fas", "fa-download"],
+            func: this.pullOffProducts
+          },
+          {
+            name: this.$t("products.buttons.delete"),
+            highlight: false,
+            disabled: true,
+            icon: ["far", "fa-trash-alt"],
+            func: this.deleteProducts
+          }]
+      },
+      getButtonClass(highlight, disabled) {
+        let bynClass = [];
+
+        if (disabled) {
+          bynClass.push("not-active");
+          bynClass.push("btn-outline-disabled");
+
+        } else if (highlight) {
+          bynClass.push("btn-outline-secondary");
+
+        } else {
+          bynClass.push("btn-outline-primary");
+        }
+        return bynClass
+      },
+      pushAlertMessage(message = "", style = "warning") {
+        this.$bus.$emit('message:push', message, style);
       },
       pageTurning(from, to) {
         if (from === to) {
@@ -265,11 +321,21 @@
           this.getProducts(this.pagination.currentPage)
         });
       },
+      pullOffProducts(){
+        this.isLoading = true;
+        let pullOffItems = this.$refs.productsTable.checkedValues
+    
+      }
 
     }
   }
 </script>
 
 <style scoped>
-
+  .not-active {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color:  #dee2e6;
+  }
 </style>

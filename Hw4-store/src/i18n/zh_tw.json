@@ -19,9 +19,10 @@
   },
   "products": {
     "buttons": {
-      "putOnSale": "上架新商品",
-      "pullOffShelves": "下架商品",
-      "delete": "刪除商品"
+      "add": "新增",
+      "putOnSale": "上架",
+      "pullOffShelves": "下架",
+      "delete": "刪除"
     },
     "tableHeaders": {
       "classification": "分類",

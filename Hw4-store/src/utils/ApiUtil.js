@@ -44,7 +44,7 @@ export default {
       }
     })
   },
-  uploadProduct(http, product) {
+  createProduct(http, product) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product`;
     return http.post(API, {data: product})
   },
@@ -71,6 +71,17 @@ export default {
       API = API + `?page=${page}`
     }
 
+    return http.get(API)
+  },
+  createCoupon(http, coupon) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon`;
+    return http.post(API, {data: coupon})
+  },
+  getCoupons(http, page) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupons`;
+    if (page) {
+      API = API + `?page=${page}`
+    }
     return http.get(API)
   },
 

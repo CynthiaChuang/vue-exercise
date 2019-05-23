@@ -39,7 +39,7 @@
     </table>
 
 
-    <!--no-data solt-->
+    <!--no-data slot-->
     <slot name="no-data" v-if="tableItem.length<=0">
       <div class="text-center mt-5">
         <div>

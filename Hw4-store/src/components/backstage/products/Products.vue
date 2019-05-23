@@ -251,8 +251,8 @@
           image: item.imageUrl,
         };
 
-        apiUtil.uploadProduct(this.$http, item).then((response) => {
-          logger.debug(this, "uploadProduct", response);
+        apiUtil.createProduct(this.$http, item).then((response) => {
+          logger.debug(this, "createProduct", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
 

@@ -125,13 +125,36 @@
       "status": "狀態",
       "edit": "編輯"
     },
+    "tableBody": {
+      "status": {
+        "give": "發放",
+        "ungive": "未發放"
+      },
+      "edit": "編輯"
+    },
     "buttons": {
       "give": "發放",
       "cancel": "取消"
     },
+    "dialogTitles": "檢視優惠券",
     "noCoupons" :{
       "message": "目前您還沒有新增任何的優惠券，請先新增",
       "btn": "新增優惠券"
+    },
+    "couponsDialog": {
+      "title": "名稱",
+      "titleHint": "請輸入優惠券名稱",
+      "titleError": "優惠券名稱不得為空",
+      "code": "優惠碼",
+      "codeHint": "請輸入優惠碼",
+      "codeError": "優惠券名稱不得為空，且僅能包含英數、底線與破折號",
+      "dueDate": "有效日期",
+      "dueDateHint": "請輸入有效日期",
+      "dueDateError": "有效日期錯誤",
+      "percent": "折扣(%)",
+      "percentHint": "請輸入提供的折扣數字",
+      "percentError": "請輸入100內的數字",
+      "directlyGive": "是否直接發放"
     }
   }
 }

@@ -16,7 +16,7 @@
     </div>
 
     <DataTable
-      ref="ordersTable"
+      ref="couponsTable"
       :headers="headers"
       :tableItem="coupons"
       :pagination="pagination"
@@ -100,6 +100,19 @@
       this.initHeaders();
       this.initButtons();
     },
+    mounted () {
+      this.$watch(
+        () => {
+          return this.$refs.couponsTable.checkedValues.length
+        },
+        (val) => {
+          this.buttons.forEach((item) => {
+            if (item.name !== this.$t("common.buttons.add") &&  item.name !== this.$t("common.buttons.refresh")) {
+              item.disabled = val === 0;
+            }
+          })
+        })
+    },
     methods: {
       initHeaders() {
         this.headers = [
@@ -146,7 +159,7 @@
             disabled: true,
             highlight: false,
             icon: ["far fa-trash-alt"],
-            action: this.refresh
+            action: this.deleteBatchCoupons
           }
           ]
       },
@@ -234,6 +247,39 @@
           this.getCoupons(this.pagination.currentPage)
         });
 
+      },
+      deleteBatchCoupons() {
+        this.isLoading = true;
+        let deleteItems = this.$refs.couponsTable.checkedValues.map((item) => {
+          return {id: item.id, title: item.title}
+        });
+
+        apiUtil.deleteBatchCoupons(this.$http, 0, deleteItems, [], (responses) => {
+          logger.debug(this, "deleteBatchCoupons", responses);
+
+          let failed = [];
+
+          for (let res of responses) {
+            if (!res.message) {
+              failed.push(res.title);
+            }
+          }
+
+          let alertStyle = failed.length <= 0 ? "success" : "danger";
+          let message = "";
+          if (failed.length === 0) {
+            message = this.$t("coupons.deleteError.success");
+          } else if (failed.length > 0 && failed.length !== deleteItems.length) {
+            message = `${this.$t("coupons.deleteError.someFail")}:${failed}`;
+          } else {
+            message = this.$t("coupons.deleteError.fail");
+          }
+
+          this.pushAlertMessage(message, alertStyle);
+
+          this.isLoading = false;
+          this.getCoupons(this.pagination.currentPage)
+        });
       }
     }
   }

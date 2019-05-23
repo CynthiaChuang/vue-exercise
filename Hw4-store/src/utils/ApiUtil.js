@@ -84,5 +84,22 @@ export default {
     }
     return http.get(API)
   },
+  deleteCoupon(http, id) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon/${id}`;
+    return http.delete(API)
+  },
+  async deleteBatchCoupons(http, idx = 0, items = [], message = [], callback) {
+    if (idx >= items.length) {
+      callback(message);
+      return
+    }
+    await this.deleteCoupon(http, items[idx].id).then((response) => {
+      console.log("deleteCoupon", response);
+      response.data.name = items[idx].title;
+      message.push(response.data);
+    });
+
+    await this.deleteBatchCoupons(http, idx + 1, items, message, callback);
+  },
 
 }

@@ -155,6 +155,11 @@
       "percentHint": "請輸入提供的折扣數字",
       "percentError": "請輸入100內的數字",
       "directlyGive": "是否直接發放"
+    },
+    "deleteError": {
+      "success": "已刪除全部優惠券",
+      "fail": "刪除失敗",
+      "someFail": "部份優惠券刪除失敗"
     }
   }
 }

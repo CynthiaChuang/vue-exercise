@@ -107,6 +107,7 @@
     },
     watch: {
       coupon() {
+        console.log(this.coupon)
         this.setCloneCoupon(this.coupon)
       }
     },

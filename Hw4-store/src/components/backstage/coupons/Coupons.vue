@@ -37,7 +37,7 @@
 
         <td>
           <a class="btn btn-sm btn-outline-primary" href="#"
-             @click.prevent.stop="showCouponDialog(props.item, false)">
+             @click.prevent.stop="showModifyCouponDialog(props.item)">
             {{$t("products.tableBody.edit")}}
           </a>
         </td>
@@ -49,7 +49,7 @@
         </div>
         <p class="text-center mt-3" style="color:rgba(108,117,125,0.38);">
           {{$t("coupons.noCoupons.message")}}</p>
-        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showCouponDialog">
+        <a class="btn btn-sm btn-secondary" href="#" @click.prevent="showCreateCouponDialog">
           <i class="fas fa-plus"></i>
           {{$t("coupons.noCoupons.btn")}}
         </a>
@@ -57,11 +57,18 @@
 
     </DataTable>
 
+    <!-- Created Dialog -->
+    <CouponDialog
+      :dialogId="createCouponDialogId"
+      :title="$t('coupons.dialogTitles')"
+      @done="createCoupon"
+    />
+
     <!-- Modify Dialog -->
     <CouponDialog
-      :dialogId="couponDialogId"
+      :dialogId="modifyCouponDialogId"
       :title="$t('coupons.dialogTitles')"
-      :product="modifyItem"
+      :coupon="modifyItem"
       @done="modifyCoupon"
     />
   </div>
@@ -92,7 +99,8 @@
       coupons: [],
       headers: [],
       isLoading: false,
-      couponDialogId: "couponDialog",
+      createCouponDialogId: "createCouponDialog",
+      modifyCouponDialogId: "modifyCouponDialog",
       modifyItem: {},
       buttons:[],
     }),
@@ -132,7 +140,7 @@
             disabled: false,
             highlight: true,
             icon: ["fas fa-plus"],
-            action: this.showCouponDialog
+            action: this.showCreateCouponDialog
           },
           {
             name: this.$t("common.buttons.refresh"),
@@ -220,17 +228,45 @@
       refresh(){
         this.getCoupons(this.pagination.currentPage)
       },
-      showCouponDialog(item, created=true) {
-        this.modifyItem = created? {}: item;
-        console.log("showCouponDialog", this.modifyItem)
-        $(`#${this.couponDialogId}`).modal("show");
+      showModifyCouponDialog(item) {
+        this.modifyItem = item;
+        $(`#${this.modifyCouponDialogId}`).modal("show");
       },
-      hideCouponDialog(){
-        $(`#${this.couponDialogId}`).modal("hide");
+      hideModifyCouponDialog(){
+        $(`#${this.modifyCouponDialogId}`).modal("hide");
       },
       modifyCoupon(item){
         this.isLoading = true;
-        this.hideCouponDialog();
+        this.hideModifyCouponDialog();
+
+        item = {
+          id: item.id,
+          title: item.title,
+          code: item.code,
+          percent: item.percent,
+          due_date: Math.floor(new Date(item.dueDate) / 1000),
+          is_enabled: item.isEnabled,
+        };
+
+        apiUtil.modifyCoupon(this.$http, item).then((response) => {
+          logger.debug(this, "modifyCoupon", response);
+          this.pushAlertMessage(`${response.data.message}:${item.title}`,
+            response.data.success ? "success" : "danger");
+
+          this.isLoading = false;
+          this.getCoupons(this.pagination.currentPage)
+        });
+
+      },
+      showCreateCouponDialog() {
+        $(`#${this.createCouponDialogId}`).modal("show");
+      },
+      hideCreateCouponDialog(){
+        $(`#${this.createCouponDialogId}`).modal("hide");
+      },
+      createCoupon(item){
+        this.isLoading = true;
+        this.hideCreateCouponDialog();
 
         item = {
           id: item.id,

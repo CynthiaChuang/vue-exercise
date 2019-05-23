@@ -4,22 +4,27 @@ export default {
       name: "Coupons"
     })
   },
-  gotoOrders(router, replace = false) {
+  gotoBackOrders(router, replace = false) {
     this._goto(router, replace, {
-      name: "Orders"
+      name: "BackOrders"
     })
   },
-  gotoProducts(router, replace = false) {
+  gotoBackProducts(router, replace = false) {
     this._goto(router, replace, {
-      name: "Products"
+      name: "BackProducts"
     })
   },
   gotoManagerPage(router, replace = false) {
-    this.gotoOrders(router, replace)
+    this.gotoBackOrders(router, replace)
   },
   gotoHomePage(router, replace = false) {
     this._goto(router, replace, {
       name: "HomePage"
+    })
+  },
+  gotoForeProducts(router, replace = false) {
+    this._goto(router, replace, {
+      name: "ForeProducts"
     })
   },
   gotoLogin(router, replace = false) {

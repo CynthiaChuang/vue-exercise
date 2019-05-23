@@ -9,6 +9,7 @@ import VeeValidate from 'vee-validate'
 import 'bootstrap'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import store from './store';
 
 import router from './router'
 import zh_tw from './i18n/zh_tw.json'
@@ -45,6 +46,7 @@ new Vue({
   el: '#app',
   router,
   i18n,
+  store,
   components: {App},
   template: '<App/>'
 });

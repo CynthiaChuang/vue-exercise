@@ -169,7 +169,7 @@
         this.getOrders(this.pagination.currentPage)
       },
       gotoProducts(){
-        routerUtil.gotoProducts(this.$router);
+        routerUtil.gotoBackProducts(this.$router);
       },
       showOrderDialog(item) {
         this.modifyItem = item;

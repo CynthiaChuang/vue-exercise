@@ -4,11 +4,12 @@ import LoginPage from '@/components/common/LoginPage.vue'
 
 import HomePage from '@/components/forestage/home/HomePage.vue'
 import ForeFooter from '@/components/forestage/Footer.vue'
+import ForeProducts from '@/components/forestage/products/ProductsPage.vue'
 
 import ManagerPage from '@/components/backstage/ManagerPage.vue'
 import BackFooter from '@/components/backstage/Footer.vue'
-import Orders from '@/components/backstage/orders/Orders.vue'
-import Products from '@/components/backstage/products/Products.vue'
+import BackOrders from '@/components/backstage/orders/Orders.vue'
+import BackProducts from '@/components/backstage/products/Products.vue'
 import Coupons from '@/components/backstage/coupons/Coupons.vue'
 
 Vue.use(Router);
@@ -23,6 +24,13 @@ export default new Router({
       },
     },
     {
+      path: '/login',
+      name: 'LoginPage',
+      components: {
+        default: LoginPage,
+      },
+    },
+    {
       path: '/',
       name: 'HomePage',
       components: {
@@ -31,10 +39,11 @@ export default new Router({
       },
     },
     {
-      path: '/login',
-      name: 'LoginPage',
-      components: {
-        default: LoginPage,
+      path: '/products',
+      name: 'ForeProducts',
+      components:{
+        default: ForeProducts,
+        footer: ForeFooter,
       },
     },
     {
@@ -47,8 +56,8 @@ export default new Router({
         {
 
           path: "",
-          component: Orders,
-          name: "Orders",
+          component: BackOrders,
+          name: "BackOrders",
           meta: {
             requiresAuth: true
           },
@@ -56,8 +65,8 @@ export default new Router({
         {
 
           path: "products",
-          component: Products,
-          name: "Products",
+          component: BackProducts,
+          name: "BackProducts",
           meta: {
             requiresAuth: true
           },

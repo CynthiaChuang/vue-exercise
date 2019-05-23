@@ -18,7 +18,7 @@
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-between">
         <a v-for="(item,idx) in menus" :key="idx"
-           class="web-title p-2 text-muted" href="#"
+           class="p-2 text-muted" href="#"
            @click.prevent="item.action">
           {{item.name}}
         </a>

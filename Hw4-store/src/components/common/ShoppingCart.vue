@@ -1,6 +1,13 @@
 <template>
   <div class="dropdown">
-    <a class="btn btn-sm btn-outline-primary" href="#" data-toggle="dropdown">
+
+    <a v-if="cartStyle==='iconOnly'" class="icon-link p-2" href="#"
+       data-toggle="dropdown">
+      <i class="fa fa-shopping-basket" aria-hidden="true">({{countTotalOrder}})</i>
+    </a>
+
+    <a v-if="cartStyle==='button'" class="btn btn-sm btn-outline-primary"
+       href="#" data-toggle="dropdown">
       <i class="fa fa-shopping-basket" aria-hidden="true"></i>
       {{ $t("shoppingCart.shoppingCart")}}({{countTotalOrder}})
     </a>
@@ -34,6 +41,10 @@
   export default {
     name: "ShoppingCart",
     props: {
+      cartStyle:{
+        type: String,
+        default: "button"
+      },
       orderList: {
         type: Array,
         default: function () {
@@ -52,8 +63,6 @@
             }
           ]
         }
-
-
       }
     },
     computed: {

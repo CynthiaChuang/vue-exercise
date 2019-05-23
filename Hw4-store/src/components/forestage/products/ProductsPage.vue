@@ -1,10 +1,13 @@
 <template>
   <div>
-    <div class="container">
-      <Navbar
-        :menus="navbarMenus"/>
 
-      <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+    <Navbar
+      :menus="navbarMenus"/>
+
+
+    <div class="container">
+
+      <div class="jumbotron mt-5 p-4 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
           <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
           <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently
@@ -112,12 +115,11 @@
 
 <script>
   import routerUtil from "@/utils/RouterUtil.js"
-
   import Navbar from "./Navbar.vue"
   import BasePage from "@/components/common/BasePage.vue"
 
   export default {
-    name: 'HomePage',
+    name: 'ProductsPage',
     extends: BasePage,
     components: {
       Navbar
@@ -130,73 +132,11 @@
     },
     methods: {
       initNavbarMenus() {
-        this.navbarMenus = [...this.$store.getters["getClNameAndRouter"],
-          {
-            name: this.$t("home.backstage"),
-            action: () => {
-              routerUtil.gotoManagerPage(this.$router)
-            }
-          }];
+        this.navbarMenus = this.$store.getters["getClNameAndRouter"];
       },
     }
   }
 </script>
+
 <style scoped>
-
-  .display-4 {
-    font-size: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .display-4 {
-      font-size: 3rem;
-    }
-  }
-
-  /*
-   * Blog name and description
-   */
-  .blog-title {
-    margin-bottom: 0;
-    font-size: 2rem;
-    font-weight: 400;
-  }
-
-  .blog-description {
-    font-size: 1.1rem;
-    color: #999;
-  }
-
-  @media (min-width: 40em) {
-    .blog-title {
-      font-size: 3.5rem;
-    }
-  }
-
-  /* Pagination */
-  .blog-pagination {
-    margin-bottom: 4rem;
-  }
-
-  .blog-pagination > .btn {
-    border-radius: 2rem;
-  }
-
-  /*
-   * Blog posts
-   */
-  .blog-post {
-    margin-bottom: 4rem;
-  }
-
-  .blog-post-title {
-    margin-bottom: .25rem;
-    font-size: 2.5rem;
-  }
-
-  .blog-post-meta {
-    margin-bottom: 1.25rem;
-    color: #999;
-  }
-
 </style>

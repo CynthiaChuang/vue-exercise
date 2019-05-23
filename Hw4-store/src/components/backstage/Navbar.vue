@@ -44,13 +44,13 @@
             {
               name: this.$t("manager.products"),
               action: () => {
-                routerUtil.gotoProducts(this.$router);
+                routerUtil.gotoBackProducts(this.$router);
               }
             },
             {
               name: this.$t("manager.orders"),
               action: () => {
-                routerUtil.gotoOrders(this.$router);
+                routerUtil.gotoBackOrders(this.$router);
               }
             },
             {

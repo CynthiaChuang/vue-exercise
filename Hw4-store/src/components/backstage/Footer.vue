@@ -1,17 +1,21 @@
 <template>
   <footer class="blog-footer">
-    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    <p>Template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
     <p>
-      <a href="#">Back to top</a>
+      <a href="#" @click.prevent="topFunction">Back to top</a>
     </p>
   </footer>
 </template>
 
 <script>
-
-
   export default {
-    name: "Footer"
+    name: "Footer",
+    methods:{
+      topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
+    }
   }
 </script>
 

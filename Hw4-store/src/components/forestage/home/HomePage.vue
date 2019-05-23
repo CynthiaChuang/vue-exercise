@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="container">
-      <Navbar></Navbar>
+      <Navbar
+        :menus="navbarMenus"/>
+
       <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
           <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
@@ -109,19 +111,67 @@
 </template>
 
 <script>
+  import routerUtil from "@/utils/RouterUtil.js"
+
   import Navbar from "./Navbar.vue"
   import BasePage from "@/components/common/BasePage.vue"
 
   export default {
-    name: 'HelloWorld',
+    name: 'HomePage',
     extends: BasePage,
     components: {
       Navbar
     },
-    data() {
-      return {
-        msg: 'Welcome to Your Vue.js App'
+    data: () => ({
+      navbarMenus: []
+    }),
+    created() {
+      this.initNavbarMenus();
+    },
+    methods: {
+      initNavbarMenus() {
+        this.navbarMenus = [
+          {
+            name: this.$t("home.classification.maskingTape"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.stamp"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.sticker"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.postcard"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.notebook"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.drawing"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.storage"),
+            action: ""
+          },
+          {
+            name: this.$t("home.classification.handmade"),
+            action: ""
+          },
+          {
+            name: this.$t("home.backstage"),
+            action: this.gotoManagerPage
+          }]
+      },
+      gotoManagerPage(){
+        routerUtil.gotoManagerPage(this.$router)
       }
+
     }
   }
 </script>

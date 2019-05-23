@@ -24,6 +24,19 @@
     "orders": "訂單管理",
     "coupons": "優惠券"
   },
+  "home": {
+    "backstage": "管理員界面",
+    "classification": {
+      "maskingTape": "紙膠帶",
+      "stamp": "印章",
+      "sticker": "貼紙",
+      "postcard": "明信片",
+      "notebook": "筆記本",
+      "drawing": "繪圖工具",
+      "storage": "收納工具",
+      "handmade": "手作課程"
+    }
+  },
   "products": {
     "buttons": {
       "putOnSale": "上架",

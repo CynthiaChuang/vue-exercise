@@ -35,14 +35,8 @@
   import apiUtil from "@/utils/ApiUtil.js"
   import routerUtil from "@/utils/RouterUtil.js"
 
-  import Sidebar from "./Sidebar.vue"
-
-
   export default {
     name: "Navbar",
-    components: {
-      Sidebar
-    },
     data() {
       return {
         classifications: {

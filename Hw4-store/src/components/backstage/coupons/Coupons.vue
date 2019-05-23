@@ -383,11 +383,13 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "@/assets/all.scss";
+
   .not-active {
     pointer-events: none;
     cursor: default;
     text-decoration: none;
-    color:  #dee2e6;
+    color: $gray-300;
   }
 </style>

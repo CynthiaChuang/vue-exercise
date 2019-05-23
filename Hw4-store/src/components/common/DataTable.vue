@@ -139,7 +139,9 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "@/assets/all.scss";
+
   .fontawesome-checkbox input[type="checkbox"] {
     display: none;
   }
@@ -148,7 +150,7 @@
     font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
     font-weight: 400;
     font-style: normal;
-    color: #6c757d;
+    color: $gray-600;
     width: 1em;
     height: 1em;;
     content: "\f0c8";

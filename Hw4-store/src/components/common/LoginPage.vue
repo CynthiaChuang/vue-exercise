@@ -71,11 +71,12 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "@/assets/all.scss";
 
   .eye-icon {
     position: relative;
-    color: #aaa;
+    color: $gray-400;
     font-size: 16px;
   }
 

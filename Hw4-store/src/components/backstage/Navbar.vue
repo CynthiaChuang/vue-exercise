@@ -109,10 +109,6 @@
 </script>
 
 <style scoped>
-  .tmp {
-    margin: 100px;
-  }
-
   .nav-header {
     line-height: 1;
     background: white;

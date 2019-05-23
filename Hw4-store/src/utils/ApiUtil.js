@@ -1,4 +1,5 @@
 export default {
+  // common
   login(http, username, password) {
     const API = `${process.env.SERVER_URL}/admin/signin`;
     return http.post(API, {username, password})
@@ -11,6 +12,9 @@ export default {
     const API = `${process.env.SERVER_URL}/api/user/check`;
     return http.post(API)
   },
+
+
+  // admin product
   getProducts(http, page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/products`;
     if (page) {
@@ -65,6 +69,9 @@ export default {
 
     await this.deleteBatchProducts(http, idx + 1, items, message, callback);
   },
+
+
+  // admin order
   getOrders(http, page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/orders`;
     if (page) {
@@ -73,6 +80,9 @@ export default {
 
     return http.get(API)
   },
+
+
+  // admin coupon
   createCoupon(http, coupon) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon`;
     return http.post(API, {data: coupon})
@@ -100,6 +110,23 @@ export default {
     });
 
     await this.deleteBatchCoupons(http, idx + 1, items, message, callback);
+  },
+  modifyCoupon(http, item) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon/${item.id}`;
+    return http.put(API, {data: item})
+  },
+  async modifyBatchCoupons(http, idx = 0, items = [], message = [], callback) {
+    if (idx >= items.length) {
+      callback(message);
+      return
+    }
+    await this.modifyCoupon(http, items[idx]).then((response) => {
+      console.log("modifyCoupon", response);
+      response.data.name = items[idx].title;
+      message.push(response.data);
+    });
+
+    await this.modifyBatchCoupons(http, idx + 1, items, message, callback);
   },
 
 }

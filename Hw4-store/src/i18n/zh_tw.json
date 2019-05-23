@@ -160,6 +160,16 @@
       "success": "已刪除全部優惠券",
       "fail": "刪除失敗",
       "someFail": "部份優惠券刪除失敗"
+    },
+    "giveCoupons":{
+      "success": "已將選定優惠券發放",
+      "fail": "發放失敗",
+      "someFail": "部份優惠券發放失敗"
+    },
+    "cancelCoupons":{
+      "success": "已將選定優惠券取消",
+      "fail": "取消失敗",
+      "someFail": "部份優惠券取消失敗"
     }
   }
 }

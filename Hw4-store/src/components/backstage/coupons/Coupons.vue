@@ -36,7 +36,8 @@
         </td>
 
         <td>
-          <a class="btn btn-sm btn-outline-primary" href="#" @click.prevent.stop="showModifyDialog(props.item)">
+          <a class="btn btn-sm btn-outline-primary" href="#"
+             @click.prevent.stop="showCouponDialog(props.item, false)">
             {{$t("products.tableBody.edit")}}
           </a>
         </td>
@@ -145,14 +146,14 @@
             disabled: true,
             highlight: false,
             icon: ["fas fa-dollar-sign"],
-            action: this.refresh
+            action: this.giveCoupons
           },
           {
             name: this.$t("coupons.buttons.cancel"),
             disabled: true,
             highlight: false,
             icon: ["fas fa-strikethrough"],
-            action: this.refresh
+            action: this.cancelCoupons
           },
           {
             name: this.$t("common.buttons.delete"),
@@ -200,6 +201,7 @@
                 title: item.title,
                 code: item.code,
                 percent: item.percent ? item.percent : 100,
+                // dueDate: item.due_date,
                 dueDate: item.due_date ? new Date(item.due_date * 1000).toISOString().split('T')[0] : new Date(),
                 isEnabled: item.is_enabled
               }
@@ -218,8 +220,9 @@
       refresh(){
         this.getCoupons(this.pagination.currentPage)
       },
-      showCouponDialog(item) {
-        this.modifyItem = item;
+      showCouponDialog(item, created=true) {
+        this.modifyItem = created? {}: item;
+        console.log("showCouponDialog", this.modifyItem)
         $(`#${this.couponDialogId}`).modal("show");
       },
       hideCouponDialog(){
@@ -234,7 +237,7 @@
           title: item.title,
           code: item.code,
           percent: item.percent,
-          due_date: Math.floor(item.dueDate / 1000),
+          due_date: Math.floor(new Date(item.dueDate) / 1000),
           is_enabled: item.isEnabled,
         };
 
@@ -280,7 +283,66 @@
           this.isLoading = false;
           this.getCoupons(this.pagination.currentPage)
         });
-      }
+      },
+      getSelectedCoupons(status = "giveCoupons") {
+        let enabled = status !== "giveCoupons";
+
+        return this.$refs.couponsTable.checkedValues
+          .filter((item) => {
+            return enabled
+          })
+          .map((item) => {
+            return {
+              id: item.id,
+              title: item.title,
+              code: item.code,
+              percent: item.percent ,
+              due_date: Math.floor(new Date(item.dueDate) / 1000),
+              is_enabled: !enabled
+            };
+          });
+      },
+      cancelCoupons(){
+        this.isLoading = true;
+        let items = this.getSelectedCoupons("cancelCoupons");
+        this.isLoading = false;
+        this.modifyBatchCoupons(items, "cancelCoupons");
+      },
+      giveCoupons(){
+        this.isLoading = true;
+        let items = this.getSelectedCoupons("giveCoupons");
+        this.isLoading = false;
+        this.modifyBatchCoupons(items, "giveCoupons");
+      },
+      modifyBatchCoupons(items, messageType = 'giveCoupons') {
+        this.isLoading = true;
+        apiUtil.modifyBatchCoupons(this.$http, 0, items, [], (responses) => {
+          logger.debug(this, "modifyBatchCoupons", responses);
+
+          let failed = [];
+          for (let res of responses) {
+            if (!res.message) {
+              failed.push(res.title);
+            }
+          }
+
+          let alertStyle = failed.length <= 0 ? "success" : "danger";
+          let message = "";
+          if (failed.length === 0) {
+            message = this.$t(`coupons.${messageType}.success`);
+
+          } else if (failed.length > 0 && failed.length !== items.length) {
+            message = `${this.$t(`coupons.${messageType}..someFail`)}:${failed}`;
+
+          } else {
+            message = this.$t(`coupons.${messageType}.fail`);
+          }
+
+          this.pushAlertMessage(message, alertStyle);
+          this.isLoading = false;
+          this.getCoupons(this.pagination.currentPage)
+        })
+      },
     }
   }
 </script>

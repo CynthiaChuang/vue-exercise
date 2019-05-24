@@ -5,6 +5,8 @@ import LoginPage from '@/components/common/LoginPage.vue'
 import HomePage from '@/components/forestage/home/HomePage.vue'
 import ForeFooter from '@/components/forestage/Footer.vue'
 import ForeProducts from '@/components/forestage/products/ProductsPage.vue'
+import Category from '@/components/forestage/products/category/Category.vue'
+
 
 import ManagerPage from '@/components/backstage/ManagerPage.vue'
 import BackFooter from '@/components/backstage/Footer.vue'
@@ -40,11 +42,17 @@ export default new Router({
     },
     {
       path: '/products',
-      name: 'ForeProducts',
       components:{
         default: ForeProducts,
         footer: ForeFooter,
       },
+      children: [
+        {
+          path: "",
+          component: Category,
+          name: "Category",
+        }
+      ]
     },
     {
       path: '/admin',

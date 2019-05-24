@@ -37,6 +37,12 @@
       "handmade": "手作課程"
     }
   },
+  "foreProducts": {
+    "card": {
+      "originalPrice": "定價",
+      "discountPrice": "優惠價"
+    }
+  },
   "products": {
     "buttons": {
       "putOnSale": "上架",

@@ -22,10 +22,14 @@ export default {
       name: "HomePage"
     })
   },
-  gotoForeProducts(router, replace = false) {
+  gotoCategory(router, categoryName, replace = false) {
     this._goto(router, replace, {
-      name: "ForeProducts"
+      name: "Category",
+      query: {category: categoryName},
     })
+  },
+  gotoForeProducts(router, replace = false) {
+    this.gotoCategory(router, "all", replace)
   },
   gotoLogin(router, replace = false) {
     this._goto(router, replace, {

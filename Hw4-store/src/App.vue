@@ -19,37 +19,59 @@
           clNameAndRouter: [
             {
               name: this.$t("home.classification.maskingTape"),
+              category:"maskingTape",
               action: () => {
-                routerUtil.gotoForeProducts(this.$router)
+                routerUtil.gotoCategory(this.$router, "maskingTape")
               }
             },
             {
               name: this.$t("home.classification.stamp"),
-              action: ""
+              category:"stamp",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "stamp")
+              }
             },
             {
               name: this.$t("home.classification.sticker"),
-              action: ""
+              category:"sticker",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "sticker")
+              }
             },
             {
               name: this.$t("home.classification.postcard"),
-              action: ""
+              category:"postcard",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "postcard")
+              }
             },
             {
               name: this.$t("home.classification.notebook"),
-              action: ""
+              category:"notebook",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "notebook")
+              }
             },
             {
               name: this.$t("home.classification.drawing"),
-              action: ""
+              category:"drawing",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "drawing")
+              }
             },
             {
               name: this.$t("home.classification.storage"),
-              action: ""
+              category:"storage",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "storage")
+              }
             },
             {
               name: this.$t("home.classification.handmade"),
-              action: ""
+              category:"handmade",
+              action:() => {
+                routerUtil.gotoCategory(this.$router, "handmade")
+              }
             }]
         });
       }

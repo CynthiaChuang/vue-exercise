@@ -35,6 +35,10 @@
       "drawing": "繪圖工具",
       "storage": "收納工具",
       "handmade": "手作課程"
+    },
+    "tab": {
+      "recommend": "推薦 | RECOMMENDED PRODUCTS",
+      "recently": "最新 | RECENT PRODUCTS"
     }
   },
   "foreProducts": {

@@ -21,15 +21,34 @@
 
   export default {
     name: "BannerSwiper",
+    data: () => ({
+      swiperOption: {
+        spaceBetween: 30,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet(index, className) {
+            return `<span class="${className} swiper-pagination-bullet-custom"></span>`
+          }
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false
+        },
+        loop: true,
+        slidesPerView: 1,
+      },
+    }),
     props: {
       banners: {
         type: Array,
         request: true
       },
-      swiperOption: {
-        type: Object,
-        request: true
-      }
     },
     computed: {
       swiper() {

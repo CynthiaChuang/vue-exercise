@@ -6,10 +6,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
 import VeeValidate from 'vee-validate'
-import 'bootstrap'
 import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
 import store from './store';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+import 'bootstrap'
+import 'vue-loading-overlay/dist/vue-loading.css';
+import 'swiper/dist/css/swiper.css'
+
 
 import router from './router'
 import zh_tw from './i18n/zh_tw.json'
@@ -19,6 +23,7 @@ import './utils/Bus.js'
 Vue.use(VueI18n);
 Vue.use(VueAxios, axios);
 Vue.use(VeeValidate);
+Vue.use(VueAwesomeSwiper, /* { default global options } */);
 Vue.component("Loading", Loading);
 
 Vue.config.productionTip = false;

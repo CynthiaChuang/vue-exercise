@@ -4,12 +4,16 @@ import mutation from "./mutation.js";
 
 const state = {
   clNameAndRouter: '',
+  banners:[]
 };
 
 // getters
 const getters = {
   getClNameAndRouter: (state) => {
     return state.clNameAndRouter
+  },
+  getBanners: (state) => {
+    return state.banners
   },
 };
 

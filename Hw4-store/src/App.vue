@@ -12,6 +12,7 @@
     name: 'App',
     created() {
       this.initClNameAndRouter();
+      this.initBanners();
     },
     methods:{
       initClNameAndRouter() {
@@ -74,6 +75,16 @@
               }
             }]
         });
+      },
+      initBanners(){
+        this.$store.commit('initBanners',{
+          imageUrls:[
+            require("./assets/image/banner_1.jpg"),
+            require("./assets/image/banner_2.jpg"),
+            require("./assets/image/banner_3.jpg"),
+            require("./assets/image/banner_4.jpg"),
+            require("./assets/image/banner_5.jpg")],
+        })
       }
     }
   }

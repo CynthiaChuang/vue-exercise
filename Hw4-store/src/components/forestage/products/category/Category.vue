@@ -22,7 +22,7 @@
     <!--gallery view-->
     <section v-if="showModel ==='gallery'" class="row mb-4">
       <GalleryCard
-        v-for="item in products"
+        v-for="(item, idx) in products"
         :key="item.id"
         :item="item"/>
     </section>

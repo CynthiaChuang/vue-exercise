@@ -44,7 +44,7 @@
         default: "title"
       },
       showpieces: {
-        type: Object,
+        type: Array,
         request: true
       }
     }

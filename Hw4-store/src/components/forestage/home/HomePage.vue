@@ -6,8 +6,7 @@
 
       <BannerSwiper
         class="pb-4 pt-1"
-        :banners="banners"
-        :swiperOption="swiperOption"/>
+        :banners="banners"/>
 
     </div>
 

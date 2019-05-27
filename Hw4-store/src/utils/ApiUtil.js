@@ -50,6 +50,27 @@ export default {
       hasPre: pagination.has_pre,
     }
   },
+  couponToServerFormat(coupon) {
+    return {
+      id: coupon.id,
+      title: coupon.title,
+      code: coupon.code,
+      percent: coupon.percent,
+      due_date: coupon.floor(new Date(coupon.dueDate) / 1000),
+      is_enabled: coupon.isEnabled
+    }
+  },
+  couponToLocalFormat(coupon) {
+    return  {
+      id: coupon.id,
+      title: coupon.title,
+      code: coupon.code,
+      percent: coupon.percent ? item.percent : 100,
+      dueDate: coupon.due_date ? new Date(item.due_date * 1000).toISOString().split('T')[0] : new Date(),
+      isEnabled: coupon.is_enabled
+    }
+  },
+
 
   // admin product
   getForeProducts(http, page) {

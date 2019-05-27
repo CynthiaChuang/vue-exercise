@@ -204,15 +204,7 @@
           if (response.data.success) {
 
             vm.coupons = response.data.coupons.map((item) => {
-              return {
-                id: item.id,
-                title: item.title,
-                code: item.code,
-                percent: item.percent ? item.percent : 100,
-                // dueDate: item.due_date,
-                dueDate: item.due_date ? new Date(item.due_date * 1000).toISOString().split('T')[0] : new Date(),
-                isEnabled: item.is_enabled
-              }
+              return apiUtil.couponToLocalFormat(item)
             });
 
             vm.pagination = apiUtil.paginationToLocalFormat(response.data.pagination);
@@ -234,14 +226,7 @@
         this.isLoading = true;
         this.hideModifyCouponDialog();
 
-        item = {
-          id: item.id,
-          title: item.title,
-          code: item.code,
-          percent: item.percent,
-          due_date: Math.floor(new Date(item.dueDate) / 1000),
-          is_enabled: item.isEnabled,
-        };
+        item = apiUtil.couponToServerFormat(item);
 
         apiUtil.modifyCoupon(this.$http, item).then((response) => {
           logger.debug(this, "modifyCoupon", response);
@@ -263,14 +248,7 @@
         this.isLoading = true;
         this.hideCreateCouponDialog();
 
-        item = {
-          id: item.id,
-          title: item.title,
-          code: item.code,
-          percent: item.percent,
-          due_date: Math.floor(new Date(item.dueDate) / 1000),
-          is_enabled: item.isEnabled,
-        };
+        item = apiUtil.couponToServerFormat(item);
 
         apiUtil.createCoupon(this.$http, item).then((response) => {
           logger.debug(this, "createCoupon", response);
@@ -317,20 +295,12 @@
       },
       getSelectedCoupons(status = "giveCoupons") {
         let enabled = status !== "giveCoupons";
-
         return this.$refs.couponsTable.checkedValues
           .filter((item) => {
-            return enabled
-          })
-          .map((item) => {
-            return {
-              id: item.id,
-              title: item.title,
-              code: item.code,
-              percent: item.percent ,
-              due_date: Math.floor(new Date(item.dueDate) / 1000),
-              is_enabled: !enabled
-            };
+            return item.isEnabled === enabled
+          }).map((item) => {
+            item.isEnabled = !enabled;
+            return apiUtil.couponToServerFormat(item);
           });
       },
       cancelCoupons(){

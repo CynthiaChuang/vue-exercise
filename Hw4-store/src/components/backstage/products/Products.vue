@@ -202,27 +202,9 @@
           logger.debug(this, "getProducts", response);
           if (response.data.success) {
             vm.products = response.data.products.map((item) => {
-              return {
-                id: item.id,
-                title: item.title,
-                category: item.category,
-                content: item.content,
-                description: item.description,
-                inventory: item.inventory ? item.inventory : 1,
-                unit: item.unit,
-                originPrice: item.origin_price,
-                price: item.price,
-                isEnabled: item.is_enabled,
-                imageUrl: item.image,
-              }
+              return apiUtil.productToLocalFormat(item)
             });
-
-            vm.pagination = {
-              currentPage: response.data.pagination.current_page,
-              totalPages: response.data.pagination.total_pages,
-              hasNext: response.data.pagination.has_next,
-              hasPre: response.data.pagination.has_pre,
-            };
+            vm.pagination = apiUtil.paginationToLocalFormat(response.data.pagination);
           }
           this.isLoading = false;
         })
@@ -237,20 +219,7 @@
         this.isLoading = true;
         this.hideUploadDialog();
 
-        item = {
-          id: item.id,
-          title: item.title,
-          category: item.category,
-          content: item.content,
-          description: item.description,
-          inventory: item.inventory,
-          unit: item.unit,
-          origin_price: item.originPrice,
-          price: item.price,
-          is_enabled: item.isEnabled,
-          image: item.imageUrl,
-        };
-
+        item = apiUtil.productToServerFormat(item);
         apiUtil.createProduct(this.$http, item).then((response) => {
           logger.debug(this, "createProduct", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
@@ -272,20 +241,7 @@
         this.isLoading = true;
         this.hideModifyDialog();
 
-        item = {
-          id: item.id,
-          title: item.title,
-          category: item.category,
-          content: item.content,
-          description: item.description,
-          inventory: item.inventory,
-          unit: item.unit,
-          origin_price: item.originPrice,
-          price: item.price,
-          is_enabled: item.isEnabled,
-          image: item.imageUrl,
-        };
-
+        item = apiUtil.productToServerFormat(item);
         apiUtil.modifyProduct(this.$http, item).then((response) => {
           logger.debug(this, "modifyProduct", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
@@ -335,20 +291,10 @@
             return item.isEnabled
           })
           .map((item) => {
-            return {
-              id: item.id,
-              title: item.title,
-              category: item.category,
-              content: item.content,
-              description: item.description,
-              inventory: item.inventory,
-              unit: item.unit,
-              origin_price: item.originPrice,
-              price: item.price,
-              is_enabled: false,
-              image: item.imageUrl,
-            };
+            item.isEnabled = false ;
+            return apiUtil.productToServerFormat(item);
           });
+
         this.isLoading = false;
         this.modifyBatchProducts(items, "pullOffError");
       },
@@ -359,19 +305,8 @@
             return !item.isEnabled
           })
           .map((item) => {
-            return {
-              id: item.id,
-              title: item.title,
-              category: item.category,
-              content: item.content,
-              description: item.description,
-              inventory: item.inventory,
-              unit: item.unit,
-              origin_price: item.originPrice,
-              price: item.price,
-              is_enabled: true,
-              image: item.imageUrl,
-            };
+            item.isEnabled = true ;
+            return apiUtil.productToServerFormat(item);
           });
         this.isLoading = false;
         this.modifyBatchProducts(items, "putOnSaleError");

@@ -215,12 +215,7 @@
               }
             });
 
-            vm.pagination = {
-              currentPage: response.data.pagination.current_page,
-              totalPages: response.data.pagination.total_pages,
-              hasNext: response.data.pagination.has_next,
-              hasPre: response.data.pagination.has_pre,
-            };
+            vm.pagination = apiUtil.paginationToLocalFormat(response.data.pagination);
           }
           this.isLoading = false;
         })

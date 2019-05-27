@@ -16,7 +16,6 @@
                 :title="display.title"
                 :showpieces="display.showpieces"/>
 
-
       <Temp/>
     </main>
   </div>
@@ -58,7 +57,7 @@
       initNavbarMenus() {
         this.navbarMenus = [...this.$store.getters["getClNameAndRouter"],
           {
-            name: this.$t("home.backstage"),
+            name: this.$t("home.user"),
             action: () => {
               routerUtil.gotoManagerPage(this.$router)
             }

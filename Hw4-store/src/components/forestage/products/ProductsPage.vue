@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  import routerUtil from "@/utils/RouterUtil.js"
+
   import Navbar from "./Navbar.vue"
   import BasePage from "@/components/common/BasePage.vue"
 
@@ -26,7 +28,12 @@
     },
     methods: {
       initNavbarMenus() {
-        this.navbarMenus = this.$store.getters["getClNameAndRouter"];
+        this.navbarMenus = [{
+          name:"全部商品",
+          action: () => {
+            routerUtil.gotoCategory(this.$router, "all")
+          }
+        }, ...this.$store.getters["getClNameAndRouter"]];
       },
     }
   }

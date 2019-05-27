@@ -14,71 +14,24 @@
       this.initClNameAndRouter();
       this.initBanners();
     },
-    methods:{
+    methods: {
       initClNameAndRouter() {
-        this.$store.commit('initClNameAndRouter', {
-          clNameAndRouter: [
-            {
-              name: this.$t("home.classification.maskingTape"),
-              category:"maskingTape",
-              action: () => {
-                routerUtil.gotoCategory(this.$router, "maskingTape")
-              }
-            },
-            {
-              name: this.$t("home.classification.stamp"),
-              category:"stamp",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "stamp")
-              }
-            },
-            {
-              name: this.$t("home.classification.sticker"),
-              category:"sticker",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "sticker")
-              }
-            },
-            {
-              name: this.$t("home.classification.postcard"),
-              category:"postcard",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "postcard")
-              }
-            },
-            {
-              name: this.$t("home.classification.notebook"),
-              category:"notebook",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "notebook")
-              }
-            },
-            {
-              name: this.$t("home.classification.drawing"),
-              category:"drawing",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "drawing")
-              }
-            },
-            {
-              name: this.$t("home.classification.storage"),
-              category:"storage",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "storage")
-              }
-            },
-            {
-              name: this.$t("home.classification.handmade"),
-              category:"handmade",
-              action:() => {
-                routerUtil.gotoCategory(this.$router, "handmade")
-              }
-            }]
-        });
+        let clNameAndRouter = [];
+        for (let [key, value] of Object.entries(this.$t("home.classification"))) {
+          clNameAndRouter.push({
+            name: value,
+            category: key,
+            action: () => {
+              routerUtil.gotoCategory(this.$router, key)
+            }
+          });
+        }
+
+        this.$store.commit('initClNameAndRouter', {clNameAndRouter});
       },
-      initBanners(){
-        this.$store.commit('initBanners',{
-          imageUrls:[
+      initBanners() {
+        this.$store.commit('initBanners', {
+          imageUrls: [
             require("./assets/image/banner_1.jpg"),
             require("./assets/image/banner_2.jpg"),
             require("./assets/image/banner_3.jpg"),

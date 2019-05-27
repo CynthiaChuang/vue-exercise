@@ -12,6 +12,54 @@ export default {
     const API = `${process.env.SERVER_URL}/api/user/check`;
     return http.post(API)
   },
+  productToLocalFormat(item) {
+    return {
+      id: item.id,
+      title: item.title,
+      category: item.category,
+      content: item.content,
+      description: item.description,
+      inventory: item.inventory ? item.inventory : 1,
+      unit: item.unit,
+      originPrice: item.origin_price,
+      price: item.price,
+      isEnabled: item.is_enabled,
+      imageUrl: item.image,
+    }
+  },
+  productToServerFormat(item) {
+    return {
+      id: item.id,
+      title: item.title,
+      category: item.category,
+      content: item.content,
+      description: item.description,
+      inventory: item.inventory,
+      unit: item.unit,
+      origin_price: item.originPrice,
+      price: item.price,
+      is_enabled: item.isEnabled,
+      image: item.imageUrl,
+    };
+  },
+  paginationToLocalFormat(pagination) {
+    return {
+      currentPage: pagination.current_page,
+      totalPages: pagination.total_pages,
+      hasNext: pagination.has_next,
+      hasPre: pagination.has_pre,
+    }
+  },
+
+  // admin product
+  getForeProducts(http, page) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products`;
+    if (page) {
+      API = API + `?page=${page}`
+    }
+
+    return http.get(API)
+  },
 
 
   // admin product

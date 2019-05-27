@@ -25,7 +25,7 @@
     "coupons": "優惠券"
   },
   "home": {
-    "backstage": "管理員界面",
+    "user": "會員專區",
     "classification": {
       "maskingTape": "紙膠帶",
       "stamp": "印章",
@@ -34,7 +34,7 @@
       "notebook": "筆記本",
       "drawing": "繪圖工具",
       "storage": "收納工具",
-      "handmade": "手作課程"
+      "others": "其他類別"
     },
     "tab": {
       "recommend": "推薦 | RECOMMENDED PRODUCTS",
@@ -45,7 +45,20 @@
     "card": {
       "originalPrice": "定價",
       "discountPrice": "優惠價"
-    }
+    },
+    "categoryName": {
+      "all": "全部 | ALL",
+      "maskingTape": "紙膠帶 | MASKING TAPE",
+      "stamp": "印章 | STAMP",
+      "sticker": "貼紙 | STICKER",
+      "postcard": "明信片 | POSTCARD",
+      "notebook": "筆記本 | NOTEBOOK",
+      "drawing": "繪圖工具 | DRAWING",
+      "storage": "收納工具 | STORAGE",
+      "others": "其他類別 | OTHERS"
+    },
+    "NoData" : " 您選擇的分類內沒有商品，要不要看看其他商品呢？"
+
   },
   "products": {
     "buttons": {

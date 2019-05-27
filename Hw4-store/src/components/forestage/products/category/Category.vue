@@ -40,6 +40,7 @@
 <script>
   import GalleryCard from "./GalleryCard.vue"
   import ListCard from "./ListCard.vue"
+  import fakeDataUtils from "@/utils/FakeDataUtils.js"
 
   export default {
     name: "category",
@@ -50,31 +51,7 @@
     data: () => ({
       category: "all",
       showModel: "gallery",
-      products: [{
-        id: 1,
-        category: "書寫用品",
-        imageUrl:
-          "https://images.unsplash.com/photo-1509824189536-24ab5d1ecb00?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
-        isEnabled: 1,
-        title: "TIJ 鈦極筆經典款",
-        description: "這是快把我搞瘋的鋼筆-1",
-        originPrice: "1880",
-        price: "1680",
-        inventory: "10"
-      }, {
-        id: 2,
-        category: "書寫用品",
-        imageUrl:
-          "https://images.unsplash.com/photo-1509824189536-24ab5d1ecb00?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
-        is_enabled: 0,
-        title: "TIJ 鈦極筆經典款",
-        description: "這是快把我搞瘋的鋼筆-1",
-        isEnabled: 0,
-        originPrice: "1880",
-        price: "1880",
-        inventory: "10"
-      }
-      ]
+      products:  fakeDataUtils.getProducts(),
     }),
     created() {
       this.category = this.$route.query.category;

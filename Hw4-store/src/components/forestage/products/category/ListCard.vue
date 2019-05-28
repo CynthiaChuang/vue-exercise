@@ -11,7 +11,7 @@
         <div class="row ml-1 p-3 no-gutters">
           <div class="col">
             <div class="h5">{{item.title}}</div>
-            <div class="samll mb-4 d-none d-md-block">{{item.description}}</div>
+            <div class="small mb-4 d-none d-md-block text-muted">{{item.description}}</div>
 
             <p v-if="item.originPrice === item.price" class="mb-0">
               {{`${$t("foreProducts.card.originalPrice")}:`}}

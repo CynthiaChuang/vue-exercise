@@ -23,13 +23,19 @@
       @pageTurning="pageTurning">
 
       <template slot-scope="props">
+        <td>
+          <a href="#" @click.prevent.stop="recommendedProduct(props.item)">
+            <i v-if="props.item.isRecommend === 1" class="fas fa-heart text-secondary"></i>
+            <i v-else class="far fa-heart"></i>
+          </a>
+        </td>
         <td>{{props.item.category}}</td>
         <td>{{props.item.title}}</td>
         <td class="text-right">{{props.item.originPrice | separator | dollarSign}}</td>
         <td class="text-right">{{props.item.price | separator | dollarSign}}</td>
         <td class="text-center">{{props.item.inventory}}</td>
         <td>
-          <span v-if="props.item.isEnabled" class="text-success">
+          <span v-if="props.item.isEnabled === 1" class="text-success">
             {{$t("products.tableBody.status.putOnSale")}}
           </span>
           <span v-else>{{$t("products.tableBody.status.pullOffShelves")}}</span>
@@ -124,6 +130,7 @@
     methods: {
       initHeaders() {
         this.headers = [
+          {name: "", width: 20},
           {name: this.$t("products.tableHeaders.classification"), width: 120},
           {name: this.$t("products.tableHeaders.productName"), width: ""},
           {name: this.$t("products.tableHeaders.originalPrice"), width: 120},
@@ -288,10 +295,10 @@
         this.isLoading = true;
         let items = this.$refs.productsTable.checkedValues
           .filter((item) => {
-            return item.isEnabled
+            return item.isEnabled === 1
           })
           .map((item) => {
-            item.isEnabled = false ;
+            item.isEnabled = 0 ;
             return apiUtil.productToServerFormat(item);
           });
 
@@ -302,10 +309,10 @@
         this.isLoading = true;
         let items = this.$refs.productsTable.checkedValues
           .filter((item) => {
-            return !item.isEnabled
+            return item.isEnabled === 0
           })
           .map((item) => {
-            item.isEnabled = true ;
+            item.isEnabled = 1 ;
             return apiUtil.productToServerFormat(item);
           });
         this.isLoading = false;
@@ -342,6 +349,10 @@
       },
       refresh(){
         this.getProducts(this.pagination.currentPage)
+      },
+      recommendedProduct(item){
+        item.isRecommend = item.isRecommend === 1 ? 0 : 1;
+        this.modifyProduct(item)
       }
     }
   }

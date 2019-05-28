@@ -28,12 +28,11 @@
     "user": "會員專區",
     "classification": {
       "maskingTape": "紙膠帶",
-      "stamp": "印章",
       "sticker": "貼紙",
+      "writingUtensil": "書寫用具",
       "postcard": "明信片",
       "notebook": "筆記本",
       "drawing": "繪圖工具",
-      "storage": "收納工具",
       "others": "其他類別"
     },
     "tab": {
@@ -49,12 +48,11 @@
     "categoryName": {
       "all": "全部 | ALL",
       "maskingTape": "紙膠帶 | MASKING TAPE",
-      "stamp": "印章 | STAMP",
       "sticker": "貼紙 | STICKER",
+      "writingUtensil": "書寫用具 | WRITING UTENSIL",
       "postcard": "明信片 | POSTCARD",
       "notebook": "筆記本 | NOTEBOOK",
       "drawing": "繪圖工具 | DRAWING",
-      "storage": "收納工具 | STORAGE",
       "others": "其他類別 | OTHERS"
     },
     "NoData" : " 您選擇的分類內沒有商品，要不要看看其他商品呢？"
@@ -110,7 +108,8 @@
       "descriptionHint": "請簡短描述此商品",
       "content": "說明",
       "contentHint": "請明細說明此商品",
-      "directlyPutOnSale": "是否直接上架"
+      "directlyPutOnSale": "是否直接上架",
+      "recommend": "是否推薦於首頁？"
     },
     "dialogTitles": {
       "upload": "新增產品",

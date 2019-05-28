@@ -24,6 +24,7 @@ export default {
       originPrice: item.origin_price,
       price: item.price,
       isEnabled: item.is_enabled,
+      isRecommend: item.is_recommend ? item.is_recommend : 0,
       imageUrl: item.image,
     }
   },
@@ -39,6 +40,7 @@ export default {
       origin_price: item.originPrice,
       price: item.price,
       is_enabled: item.isEnabled,
+      is_recommend: item.isRecommend,
       image: item.imageUrl,
     };
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="p-0 customized-card"
-       :class="{'sellout-badge':!item.isEnabled}">
+       :class="{'sellout-badge':item.num===0}">
     <li class="row mb-3 on-hover no-gutters list-style"
         >
       <div class="col-3">

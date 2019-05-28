@@ -115,7 +115,7 @@
       </div>
       <div class="form-group">
         <label for="content">{{$t("products.productDialog.content")}}</label>
-        <textarea type="text" class="form-control" id="content"
+        <textarea type="text" class="form-control" id="content" style="height:120px"
                   :placeholder="$t('products.productDialog.contentHint')"
                   v-model="cloneProduct.content"></textarea>
       </div>
@@ -128,6 +128,17 @@
                  :false-value="0">
           <label class="form-check-label" for="is_enabled">
             {{$t("products.productDialog.directlyPutOnSale")}}
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox"
+                 id="is_recommend"
+                 v-model="cloneProduct.isRecommend"
+                 :true-value="1"
+                 :false-value="0">
+          <label class="form-check-label" for="is_recommend">
+            {{$t("products.productDialog.recommend")}}
           </label>
         </div>
       </div>

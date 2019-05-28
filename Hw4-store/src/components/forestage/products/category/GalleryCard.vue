@@ -1,24 +1,24 @@
 <template>
   <div class="col-12 col-md-4 mb-3 text-dark customized-card"
-       :class="{'sellout-badge':!item.isEnabled}">
+       :class="{'sellout-badge':item.num===0}">
 
     <div class="card gallery-style on-hover">
       <img class="card-img-top" :src="item.imageUrl" alt="Card image cap">
 
       <div class="card-body">
-        <h5 class="card-title"> {{item.title}}</h5>
+        <h6 class="card-title"> {{item.title}}</h6>
 
         <div class="row">
           <div class="p-2 flex-fill">
             <template v-if="item.originPrice === item.price">
               {{`${$t("foreProducts.card.originalPrice")}:`}}
               <span
-                class="font-weight-bold h3 align-items-center">{{ item.originPrice | separator  | dollarSign}}</span>
+                class="font-weight-bold h4 align-items-center">{{ item.originPrice | separator  | dollarSign}}</span>
             </template>
 
             <template v-else>
               {{`${$t("foreProducts.card.discountPrice")}:`}}
-              <span class="text-secondary font-weight-bold h3 align-items-center">{{ item.price | separator  | dollarSign}}</span>
+              <span class="text-secondary font-weight-bold h4 align-items-center">{{ item.price | separator  | dollarSign}}</span>
             </template>
           </div>
 
@@ -90,11 +90,11 @@
       }
     }
 
-    .product-card {
+    .gallery-style {
       border: 1px solid $gray-400;
 
       .card-img-top {
-        height: 200px;
+        height: 280px;
       }
     }
 

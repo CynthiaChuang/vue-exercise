@@ -19,12 +19,12 @@ export default {
       category: item.category,
       content: item.content,
       description: item.description,
-      inventory: item.inventory ? item.inventory : 1,
+      inventory: item.hasOwnProperty('inventory') ? item.inventory : 1,
       unit: item.unit,
       originPrice: item.origin_price,
       price: item.price,
       isEnabled: item.is_enabled,
-      isRecommend: item.is_recommend ? item.is_recommend : 0,
+      isRecommend: item.hasOwnProperty('is_recommend') ? item.is_recommend : 0,
       imageUrl: item.image,
     }
   },
@@ -63,12 +63,12 @@ export default {
     }
   },
   couponToLocalFormat(coupon) {
-    return  {
+    return {
       id: coupon.id,
       title: coupon.title,
       code: coupon.code,
-      percent: coupon.percent ? item.percent : 100,
-      dueDate: coupon.due_date ? new Date(item.due_date * 1000).toISOString().split('T')[0] : new Date(),
+      percent: coupon.hasOwnProperty('percent') ? item.percent : 100,
+      dueDate: coupon.hasOwnProperty('due_date') ? new Date(item.due_date * 1000).toISOString().split('T')[0] : new Date(),
       isEnabled: coupon.is_enabled
     }
   },

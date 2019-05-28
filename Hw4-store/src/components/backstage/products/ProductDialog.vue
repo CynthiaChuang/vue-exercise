@@ -194,6 +194,9 @@
       onDone() {
         this.$validator.validate().then((valid) => {
           if (valid) {
+            this.cloneProduct.inventory = Number(this.cloneProduct.inventory);
+            this.cloneProduct.originPrice = Number(this.cloneProduct.originPrice);
+            this.cloneProduct.price = Number(this.cloneProduct.price);
             this.$emit("done", this.cloneProduct);
             this.onCancel();
           }

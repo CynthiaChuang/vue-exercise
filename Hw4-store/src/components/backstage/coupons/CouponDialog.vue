@@ -107,7 +107,6 @@
     },
     watch: {
       coupon() {
-        console.log(this.coupon)
         this.setCloneCoupon(this.coupon)
       }
     },
@@ -124,13 +123,14 @@
       onDone() {
         this.$validator.validate().then((valid) => {
           if (valid) {
+            this.cloneCoupon.percent = Number(this.cloneCoupon.percent);
             this.$emit("done", this.cloneCoupon);
             this.onCancel();
           }
         });
       },
       onCancel() {
-        this.setCloneCoupon(this.coupon)
+        this.setCloneCoupon(this.coupon);
         this.errors.clear();
       }
     }

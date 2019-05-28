@@ -1,6 +1,7 @@
 <template>
   <div class="col-12 col-md-4 mb-3 text-dark customized-card"
-       :class="{'sellout-badge':item.num===0}">
+       :class="{'sellout-badge':item.inventory===0}">
+
 
     <div class="card gallery-style on-hover">
       <img class="card-img-top" :src="item.imageUrl" alt="Card image cap">

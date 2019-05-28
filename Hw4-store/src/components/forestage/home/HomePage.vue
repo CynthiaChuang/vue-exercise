@@ -14,7 +14,8 @@
 
       <Showcase v-for="(display, idx) in showcases" :key="idx"
                 :title="display.title"
-                :showpieces="display.showpieces"/>
+                :showpieces="display.showpieces"
+                @onShowpieceClick="toProductDetail"/>
 
       <Temp/>
     </main>
@@ -68,8 +69,11 @@
       },
       initShowcases() {
         this.showcases = fakeDataUtils.getShowcases(this)
+      },
+      toProductDetail(item){
+        routerUtil.gotoForeProductDetail(this.$router, item.id);
       }
-    },
+    }
   }
 </script>
 

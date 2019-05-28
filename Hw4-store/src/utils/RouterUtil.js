@@ -31,6 +31,12 @@ export default {
   gotoForeProducts(router, replace = false) {
     this.gotoCategory(router, "all", replace)
   },
+  gotoForeProductDetail(router, productId ,replace = false) {
+    this._goto(router, replace, {
+      name: "ProductDetail",
+      params: {id: productId},
+    })
+  },
   gotoLogin(router, replace = false) {
     this._goto(router, replace, {
       name: "LoginPage"

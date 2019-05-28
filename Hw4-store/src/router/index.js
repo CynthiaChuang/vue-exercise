@@ -6,7 +6,7 @@ import HomePage from '@/components/forestage/home/HomePage.vue'
 import ForeFooter from '@/components/forestage/Footer.vue'
 import ForeProducts from '@/components/forestage/products/ProductsPage.vue'
 import Category from '@/components/forestage/products/category/Category.vue'
-
+import ProductDetail from '@/components/forestage/products/productDetail/ProductDetail.vue'
 
 import ManagerPage from '@/components/backstage/ManagerPage.vue'
 import BackFooter from '@/components/backstage/Footer.vue'
@@ -59,6 +59,11 @@ export default new Router({
           path: "",
           component: Category,
           name: "Category",
+        },
+        {
+          path: "detail/:id",
+          component: ProductDetail,
+          name: "ProductDetail",
         }
       ]
     },

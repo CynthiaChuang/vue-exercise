@@ -27,7 +27,10 @@
         <GalleryCard
           v-for="(item, idx) in products"
           :key="item.id"
-          :item="item"/>
+          :item="item"
+          @onAdd="addToCart"
+          @onCardClick="toProductDetail"/>
+
       </section>
 
       <!--list view-->
@@ -35,7 +38,9 @@
         <ListCard
           v-for="item in products"
           :key="item.id"
-          :item="item"/>
+          :item="item"
+          @onAdd="addToCart"
+          @onCardClick="toProductDetail"/>
       </section>
 
       <nav v-if="products.length >1" aria-label="Page navigation example">
@@ -125,7 +130,6 @@
     },
     methods:{
       pageTurning(from, to) {
-        console.log(from, to)
         if (from === to) {
           return ""
         }
@@ -146,6 +150,12 @@
           this.isLoading = false;
         })
       },
+      addToCart(item){
+        console.log("addToCart", item)
+      },
+      toProductDetail(item){
+        routerUtil.gotoForeProductDetail(this.$router, item.id);
+      }
     },
     computed: {
       displayTitle() {

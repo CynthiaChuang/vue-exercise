@@ -4,7 +4,8 @@
     <div class="row my-2">
       <swiper :options="swiperOption" class="container">
         <swiper-slide v-for="item in showpieces" :key="item.id">
-          <ShowpieceCard :item="item"/>
+          <ShowpieceCard :item="item"
+                         @onCardClick="onShowpieceClick"/>
         </swiper-slide>
         <div class="swiper-pagination swiper-pagination-bullets" slot="pagination"></div>
         <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
@@ -46,6 +47,11 @@
       showpieces: {
         type: Array,
         request: true
+      }
+    },
+    methods:{
+      onShowpieceClick(item){
+        this.$emit("onShowpieceClick", item);
       }
     }
   }

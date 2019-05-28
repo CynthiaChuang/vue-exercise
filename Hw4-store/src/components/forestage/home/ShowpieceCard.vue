@@ -1,7 +1,7 @@
 <template>
   <div class="customized-card">
     <div class="row no-gutters overflow-hidden
-    flex-md-row mb-4 h-md-250 position-relative on-hover card-style">
+    flex-md-row mb-4 h-md-250 position-relative on-hover card-style"  @click.prevent="onCardClick(item)">
       <div class="col p-4 d-flex flex-column position-static">
         <div class="mb-1 text-muted">{{item.category}}</div>
         <h3 class="mb-0">{{item.title}}</h3>
@@ -26,6 +26,11 @@
         type: Object,
         request: true
       },
+    },
+    methods:{
+      onCardClick(item){
+        this.$emit("onCardClick", item);
+      }
     }
   }
 </script>

@@ -1,6 +1,7 @@
 {
   "shopName": "Stationery",
   "common": {
+    "home": "首頁",
     "login": "登入",
     "logout": "登出",
     "NoData" : "目前沒有任何資料，請您先新增資料。",
@@ -57,6 +58,11 @@
     },
     "NoData" : " 您選擇的分類內沒有商品，要不要看看其他商品呢？"
 
+  },
+  "detail": {
+    "error": "產品已被下架或刪除",
+    "want": "我想要",
+    "addToCart": "加入購物車"
   },
   "products": {
     "buttons": {

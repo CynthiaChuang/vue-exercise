@@ -74,7 +74,7 @@ export default {
   },
 
 
-  // admin product
+  // product
   getForeProducts(http, page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products`;
     if (page) {
@@ -83,7 +83,10 @@ export default {
 
     return http.get(API)
   },
-
+  getProductDetail(http, id) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/product/${id}`;
+    return http.get(API)
+  },
 
   // admin product
   getProducts(http, page) {

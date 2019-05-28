@@ -1,9 +1,9 @@
 <template>
   <div class="p-0 customized-card"
-       :class="{'sellout-badge':item.inventory===0}">
-    <li class="row mb-3 on-hover no-gutters list-style"
-        >
-      <div class="col-3">
+       :class="{'sellout-badge':item.inventory===0}"
+       @click.prevent="onCardClick(item)">
+    <li class="row mb-3 on-hover no-gutters list-style" >
+    <div class="col-3">
         <div class="card-img-left"
              :style="{backgroundImage:`url('${item.imageUrl}')`}"></div>
       </div>
@@ -30,7 +30,7 @@
           </div>
           <div class="col-2 d-flex justify-content-center align-items-center cursor-pointer">
             <div class="">
-              <a class="btn m-2 btn-tertiary" href="#">
+              <a class="btn m-2 btn-tertiary" href="#" @click.prevent.stop="onAdd(item)">
                 <i class="fas fa-cart-plus"></i>
               </a>
             </div>
@@ -49,6 +49,14 @@
         type: Object,
         default: {}
       },
+    },
+    methods:{
+      onAdd(item){
+        this.$emit("onAdd", item);
+      },
+      onCardClick(item){
+        this.$emit("onCardClick", item);
+      }
     }
   }
 </script>

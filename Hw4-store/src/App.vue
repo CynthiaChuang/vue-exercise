@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Alert></Alert>
     <router-view/>
     <router-view name="footer"/>
   </div>
@@ -7,9 +8,13 @@
 
 <script>
   import routerUtil from "./utils/RouterUtil.js"
+  import Alert from "@/components/common/Alert.vue"
 
   export default {
     name: 'App',
+    components: {
+      Alert
+    },
     created() {
       this.initClNameAndRouter();
       this.initBanners();

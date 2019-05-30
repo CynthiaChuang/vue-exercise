@@ -42,17 +42,13 @@
             </span>
           </div>
 
-
           <div class="form-group">
-            <label for="category">{{$t("products.productDialog.category")}}</label>
-            <input type="text" class="form-control" id="category" name="category"
-                   :class="{'is-invalid':errors.has('category')}"
-                   :placeholder="$t('products.productDialog.categoryHint')"
-                   v-model="cloneProduct.category"
-                   v-validate="'required'">
-            <span class="text-danger" v-show="errors.has('category')">
-              {{$t("products.productDialog.categoryError")}}
-            </span>
+            <label for="category">{{$t("products.productDialog.category")}} {{cloneProduct.category}}</label>
+            <select id="category" name="category" class="form-control" v-model="cloneProduct.category">
+              <option disabled value="">{{$t('products.productDialog.categoryHint')}}</option>
+              <option v-for="(key, value) in $t('classification')" :value="value">{{key}}</option>
+
+            </select>
           </div>
 
 
@@ -154,7 +150,7 @@
 
   import Dialog from "@/components/common/Dialog.vue"
 
-  const MAX_FILENAME_LEN = 32 ;
+  const MAX_FILENAME_LEN = 32;
   const VALID_IMAGE_TYPES = ['image/gif', 'image/jpeg', 'image/png'];
 
   export default {
@@ -163,11 +159,13 @@
       Dialog
     },
     data: () => ({
-      cloneProduct: {},
+      cloneProduct: {
+        category: "",
+      },
       isImageUploading: false,
       imageUploadingError: {
         has: false,
-        message:""
+        message: ""
       }
     }),
     props: {
@@ -182,6 +180,7 @@
       product: {
         type: Object,
         default: () => {
+          return { category: ""}
         }
       }
     },
@@ -237,8 +236,8 @@
           this.isImageUploading = false;
           if (response.data.success) {
             this.cloneProduct.imageUrl = response.data.imageUrl
-          } else{
-            this.$bus.$emit('message:push',response.data.message, "danger");
+          } else {
+            this.$bus.$emit('message:push', response.data.message, "danger");
           }
         })
       },

@@ -1,5 +1,14 @@
 {
   "shopName": "Stationery",
+  "classification": {
+    "maskingTape": "紙膠帶",
+    "sticker": "貼紙",
+    "writingUtensil": "書寫用具",
+    "postcard": "明信片",
+    "notebook": "筆記本",
+    "drawing": "繪圖工具",
+    "others": "其他類別"
+  },
   "common": {
     "home": "首頁",
     "login": "登入",
@@ -27,15 +36,6 @@
   },
   "home": {
     "user": "會員專區",
-    "classification": {
-      "maskingTape": "紙膠帶",
-      "sticker": "貼紙",
-      "writingUtensil": "書寫用具",
-      "postcard": "明信片",
-      "notebook": "筆記本",
-      "drawing": "繪圖工具",
-      "others": "其他類別"
-    },
     "tab": {
       "recommend": "推薦 | RECOMMENDED PRODUCTS",
       "recently": "最新 | RECENT PRODUCTS"

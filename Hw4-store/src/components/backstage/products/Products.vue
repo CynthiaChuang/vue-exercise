@@ -29,7 +29,7 @@
             <i v-else class="far fa-heart"></i>
           </a>
         </td>
-        <td>{{props.item.category}}</td>
+        <td>{{ $t(`classification.${props.item.category}`)}}</td>
         <td>{{props.item.title}}</td>
         <td class="text-right">{{props.item.originPrice | separator | dollarSign}}</td>
         <td class="text-right">{{props.item.price | separator | dollarSign}}</td>

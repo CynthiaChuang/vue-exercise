@@ -103,7 +103,7 @@
             vm.detail.newContent = vm.parserContent(vm.detail.content);
 
             this.breadcrumbs.push({
-              name: this.detail.category,
+              name: this.$t(`classification.${this.detail.category}`),
               action: () => {
                 routerUtil.gotoCategory(vm.$route, vm.detail.category)
               }

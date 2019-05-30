@@ -22,7 +22,7 @@
     methods: {
       initClNameAndRouter() {
         let clNameAndRouter = [];
-        for (let [key, value] of Object.entries(this.$t("home.classification"))) {
+        for (let [key, value] of Object.entries(this.$t("classification"))) {
           clNameAndRouter.push({
             name: value,
             category: key,

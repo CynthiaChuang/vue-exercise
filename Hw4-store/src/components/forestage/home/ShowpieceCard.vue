@@ -3,7 +3,7 @@
     <div class="row no-gutters overflow-hidden
     flex-md-row mb-4 h-md-250 position-relative on-hover card-style"  @click.prevent="onCardClick(item)">
       <div class="col p-4 d-flex flex-column position-static">
-        <div class="mb-1 text-muted">{{item.category}}</div>
+        <div class="mb-1 text-muted">{{$t(`classification.${item.category}`)}}</div>
         <h5 class="mb-0 title-overflow">{{item.title}}</h5>
         <p class="d-inline-block mb-2 text-secondary">{{item.price | separator | dollarSign }}</p>
         <p class="card-text mb-auto text-muted description-overflow">{{item.description}}</p>

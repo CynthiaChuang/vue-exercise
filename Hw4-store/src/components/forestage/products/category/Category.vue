@@ -135,10 +135,14 @@
         if (from === to) {
           return ""
         }
-
         this.$set(this.pagination, "currentPage", to);
         this.$set(this.pagination, "hasNext", to !== this.pagination.totalPages);
         this.$set(this.pagination, "hasPre",  to !== 1);
+        this.backToTop();
+      },
+      backToTop() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       },
       fetchData() {
         this.$store.dispatch("forestage/getAllProducts").then(() => {

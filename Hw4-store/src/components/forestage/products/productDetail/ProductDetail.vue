@@ -86,18 +86,18 @@
     }),
     created() {
       this.productId = this.$route.params.id;
-      this.getProductDetail();
+      this.getForeProductDetail();
       this.initBreadcrumbs();
     },
     methods: {
       pushAlertMessage(message = "", style = "warning") {
         this.$bus.$emit('message:push', message, style);
       },
-      getProductDetail() {
+      getForeProductDetail() {
         this.isLoading = true;
         let vm = this;
-        apiUtil.getProductDetail(this.$http, this.productId).then((response) => {
-          logger.debug(this, "getProductDetail", response);
+        apiUtil.getForeProductDetail(this.$http, this.productId).then((response) => {
+          logger.debug(this, "getForeProductDetail", response);
           if (response.data.success) {
             vm.detail = apiUtil.productToLocalFormat(response.data.product);
             vm.detail.newContent = vm.parserContent(vm.detail.content);

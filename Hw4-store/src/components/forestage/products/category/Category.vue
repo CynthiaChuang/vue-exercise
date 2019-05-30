@@ -21,11 +21,11 @@
     </div>
 
 
-    <template v-if="products.length>0">
+    <template v-if="showProducts.length>0">
       <!--gallery view-->
       <section v-if="showModel ==='gallery'" class="row mb-4">
         <GalleryCard
-          v-for="(item, idx) in products"
+          v-for="(item, idx) in showProducts"
           :key="item.id"
           :item="item"
           @onAdd="addToCart"
@@ -36,14 +36,14 @@
       <!--list view-->
       <section v-else class="mb-4">
         <ListCard
-          v-for="item in products"
+          v-for="item in showProducts"
           :key="item.id"
           :item="item"
           @onAdd="addToCart"
           @onCardClick="toProductDetail"/>
       </section>
 
-      <nav v-if="products.length >1" aria-label="Page navigation example">
+      <nav v-if="pagination.totalPages >1" aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{'disabled':!pagination.hasPre}">
             <a class="page-link" href="#" aria-label="Previous"
@@ -83,6 +83,8 @@
 
 <script>
 
+  import {mapGetters} from 'vuex';
+
   import logger from "@/utils/LogUtil.js"
   import apiUtil from "@/utils/ApiUtil.js"
   import routerUtil from "@/utils/RouterUtil.js"
@@ -99,18 +101,18 @@
     data: () => ({
       category: "all",
       showModel: "gallery",
-      isLoading: false,
       pagination: {
         currentPage: 1,
         totalPages: 1,
         hasNext: false,
         hasPre: false,
       },
-      products:[]
+      products: [],
     }),
     created() {
       this.category = this.$route.query.category;
-      this.getProducts()
+      this.fetchData();
+      // this.getProducts()
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
@@ -128,39 +130,60 @@
         next();
       }
     },
-    methods:{
+    methods: {
       pageTurning(from, to) {
         if (from === to) {
           return ""
         }
-        this.getProducts(to);
-      },
-      getProducts(index = 1) {
-        this.isLoading = true;
-        let vm = this;
-        apiUtil.getForeProducts(this.$http, index).then((response) => {
-          logger.debug(this, "getForeProducts", response);
-          if (response.data.success) {
-            vm.products = response.data.products.map((item) => {
-                return apiUtil.productToLocalFormat(item)
-            });
 
-            vm.pagination = apiUtil.paginationToLocalFormat(response.data.pagination);
-          }
-          this.isLoading = false;
+        this.$set(this.pagination, "currentPage", to);
+        this.$set(this.pagination, "hasNext", to !== this.pagination.totalPages);
+        this.$set(this.pagination, "hasPre",  to !== 1);
+      },
+      fetchData() {
+        this.$store.dispatch("forestage/getAllProducts").then(() => {
+          this.products = this.getProductsByCategory(this.category);
+          this.$set(this.pagination, "currentPage", 1);
+          this.$set(this.pagination, "totalPages", Math.ceil(this.products.length / 9.0));
+          this.$set(this.pagination, "hasNext", this.products > 9);
+          this.$set(this.pagination, "hasPre", false);
         })
       },
-      addToCart(item){
+
+      addToCart(item) {
         console.log("addToCart", item)
-      },
-      toProductDetail(item){
+      }
+      ,
+      toProductDetail(item) {
         routerUtil.gotoForeProductDetail(this.$router, item.id);
       }
     },
+    watch: {
+      category(newVal, oldVal) {
+        this.products = this.getProductsByCategory(newVal);
+        this.$set(this.pagination, "currentPage", 1);
+        this.$set(this.pagination, "totalPages", Math.ceil(this.products.length / 9.0));
+        this.$set(this.pagination, "hasNext", this.products > 9);
+        this.$set(this.pagination, "hasPre", false);
+      },
+    },
     computed: {
+      ...mapGetters("forestage", [
+        "isLoading",
+        "getAllProducts",
+        "getProductsByCategory"
+      ]),
       displayTitle() {
         return this.$t(`foreProducts.categoryName.${this.category}`);
+      },
+      showProducts() {
+
+        let start =  9 * (this.pagination.currentPage  - 1);
+        // let end = Math.min(start + 9, this.products.length) ;
+        let end =start + 9;
+        return this.products.slice(start, end)
       }
+
     }
   };
 </script>

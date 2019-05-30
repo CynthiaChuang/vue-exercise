@@ -1,3 +1,5 @@
+import apiUtil from "@/utils/ApiUtil.js"
+
 export default {
   initClNameAndRouter(state, payload) {
     if (!payload.hasOwnProperty("clNameAndRouter")) {
@@ -12,5 +14,20 @@ export default {
     state.banners = payload.imageUrls.map((imageUrl) => {
       return {url: imageUrl}
     });
+  },
+  setLoading(state, payload) {
+    if (!payload.hasOwnProperty("isLoading")) {
+      return
+    }
+    state.isLoading = payload.isLoading;
+  },
+  setAllProducts(state, payload) {
+    if (!payload.hasOwnProperty("products")) {
+      return
+    }
+
+    state.allProducts = payload.products.map(item => apiUtil.productToLocalFormat(item) )
+
   }
+
 }

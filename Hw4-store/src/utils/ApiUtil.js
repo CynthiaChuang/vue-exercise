@@ -75,26 +75,22 @@ export default {
 
 
   // product
-  getForeProducts(http, page) {
-    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products`;
-    if (page) {
-      API = API + `?page=${page}`
-    }
-
+  getAllForeProducts(http) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products/all`;
     return http.get(API)
   },
-  getProductDetail(http, id) {
+  getForeProducts(http, page) {
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products?page=${page}`;
+    return http.get(API)
+  },
+  getForeProductDetail(http, id) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/product/${id}`;
     return http.get(API)
   },
 
   // admin product
   getProducts(http, page) {
-    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/products`;
-    if (page) {
-      API = API + `?page=${page}`
-    }
-
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/products?page=${page}`;
     return http.get(API)
   },
   modifyProduct(http, product) {
@@ -147,11 +143,7 @@ export default {
 
   // admin order
   getOrders(http, page) {
-    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/orders`;
-    if (page) {
-      API = API + `?page=${page}`
-    }
-
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/orders?page=${page}`;
     return http.get(API)
   },
 
@@ -162,10 +154,7 @@ export default {
     return http.post(API, {data: coupon})
   },
   getCoupons(http, page) {
-    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupons`;
-    if (page) {
-      API = API + `?page=${page}`
-    }
+    let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupons?page=${page}`;
     return http.get(API)
   },
   deleteCoupon(http, id) {

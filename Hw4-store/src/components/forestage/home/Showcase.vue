@@ -1,7 +1,7 @@
 <template>
   <div class="py-3">
     <h4 class="text-muted">{{title}}</h4>
-    <div class="row my-2">
+    <div class="row my-3">
       <swiper :options="swiperOption" class="container">
         <swiper-slide v-for="item in showpieces" :key="item.id">
           <ShowpieceCard :item="item"
@@ -28,7 +28,7 @@
       swiperOption: {
         slidesPerView: 2,
         slidesPerColumn: 2,
-        spaceBetween: 30,
+        spaceBetween: 25,
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
@@ -65,7 +65,7 @@
   }
 
   .swiper-slide {
-    height: 300px;
+    height: 320px;
   }
 
 </style>

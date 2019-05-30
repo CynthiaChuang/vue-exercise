@@ -32,10 +32,10 @@
           });
         }
 
-        this.$store.commit('initClNameAndRouter', {clNameAndRouter});
+        this.$store.commit("forestage/initClNameAndRouter", {clNameAndRouter});
       },
       initBanners() {
-        this.$store.commit('initBanners', {
+        this.$store.commit("forestage/initBanners", {
           imageUrls: [
             require("./assets/image/banner_1.jpg"),
             require("./assets/image/banner_2.jpg"),

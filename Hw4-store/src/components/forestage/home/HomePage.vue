@@ -12,7 +12,8 @@
 
     <main role="main" class="container">
 
-      <Showcase v-for="(display, idx) in showcases" :key="idx"
+      <Showcase class="mt-3"
+                v-for="(display, idx) in showcases" :key="idx"
                 :title="display.title"
                 :showpieces="display.showpieces"
                 @onShowpieceClick="toProductDetail"/>
@@ -52,11 +53,27 @@
     created() {
       this.initNavbarMenus();
       this.initBanners();
-      this.initShowcases();
+      // this.initShowcases();
+      this.fetchData()
     },
     methods: {
+      fetchData() {
+        this.$store.dispatch('forestage/getAllProducts').then(() => {
+
+          this.showcases = [
+            {
+              title: this.$t('home.tab.recommend'),
+              showpieces: this.$store.getters["forestage/getRecommendProducts"]
+            }
+            ,
+            {
+              title: this.$t('home.tab.recently'),
+              showpieces: this.$store.getters["forestage/getRecentlyProducts"]
+            }];
+        })
+      },
       initNavbarMenus() {
-        this.navbarMenus = [...this.$store.getters["getClNameAndRouter"],
+        this.navbarMenus = [...this.$store.getters["forestage/getClNameAndRouter"],
           {
             name: this.$t("home.user"),
             action: () => {
@@ -65,15 +82,22 @@
           }];
       },
       initBanners() {
-        this.banners = this.$store.getters["getBanners"];
+        this.banners = this.$store.getters["forestage/getBanners"];
       },
-      initShowcases() {
-        this.showcases = fakeDataUtils.getShowcases(this)
-      },
-      toProductDetail(item){
+      // initShowcases() {
+      //   this.showcases = fakeDataUtils.getShowcases(this)
+      // },
+      toProductDetail(item) {
         routerUtil.gotoForeProductDetail(this.$router, item.id);
       }
-    }
+    },
+    // computed: {
+    //   ...mapGetters("forestage", [
+    //     "getRecommendProducts",
+    //     "getAllProducts",
+    //     "getProductsByCategory"
+    //   ])
+    // }
   }
 </script>
 

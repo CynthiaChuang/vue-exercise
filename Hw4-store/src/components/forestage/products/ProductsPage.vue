@@ -33,7 +33,7 @@
           action: () => {
             routerUtil.gotoCategory(this.$router, "all")
           }
-        }, ...this.$store.getters["getClNameAndRouter"]];
+        }, ...this.$store.getters["forestage/getClNameAndRouter"]];
       },
     }
   }

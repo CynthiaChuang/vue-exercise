@@ -4,9 +4,9 @@
     flex-md-row mb-4 h-md-250 position-relative on-hover card-style"  @click.prevent="onCardClick(item)">
       <div class="col p-4 d-flex flex-column position-static">
         <div class="mb-1 text-muted">{{item.category}}</div>
-        <h3 class="mb-0">{{item.title}}</h3>
+        <h5 class="mb-0 title-overflow">{{item.title}}</h5>
         <p class="d-inline-block mb-2 text-secondary">{{item.price | separator | dollarSign }}</p>
-        <p class="card-text mb-auto text-muted">{{item.description}}</p>
+        <p class="card-text mb-auto text-muted description-overflow">{{item.description}}</p>
       </div>
       <div class="col-auto d-none d-lg-block">
         <img class="bd-placeholder-img rounded" width="200" height="250"
@@ -37,6 +37,22 @@
 
 <style lang="scss" scoped>
   @import "@/assets/all.scss";
+
+  .title-overflow{
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .description-overflow{
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 
   .customized-card {
     .on-hover {

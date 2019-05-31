@@ -151,7 +151,7 @@
       getOrders(index = 1) {
         this.isLoading = true;
         let vm = this;
-        apiUtil.getOrders(this.$http, index).then((response) => {
+        apiUtil.getOrders(index).then((response) => {
           logger.debug(this, "getOrders", response);
           if (response.data.success) {
             // vm.orders = response.data.orders;

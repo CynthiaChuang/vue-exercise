@@ -1,16 +1,18 @@
+import axios from 'axios'
+
 export default {
   // common
-  login(http, username, password) {
+  login(username, password) {
     const API = `${process.env.SERVER_URL}/admin/signin`;
-    return http.post(API, {username, password})
+    return axios.post(API, {username, password})
   },
-  logout(http) {
+  logout() {
     const API = `${process.env.SERVER_URL}/logout`;
-    return http.post(API)
+    return axios.post(API)
   },
-  checkPermission(http) {
+  checkPermission() {
     const API = `${process.env.SERVER_URL}/api/user/check`;
-    return http.post(API)
+    return axios.post(API)
   },
   productToLocalFormat(item) {
     return {
@@ -75,121 +77,121 @@ export default {
 
 
   // product
-  getAllForeProducts(http) {
+  getAllForeProducts() {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products/all`;
-    return http.get(API)
+    return axios.get(API)
   },
-  getForeProducts(http, page) {
+  getForeProducts(page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/products?page=${page}`;
-    return http.get(API)
+    return axios.get(API)
   },
-  getForeProductDetail(http, id) {
+  getForeProductDetail(id) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/product/${id}`;
-    return http.get(API)
+    return axios.get(API)
   },
 
   // admin product
-  getProducts(http, page) {
+  getProducts(page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/products?page=${page}`;
-    return http.get(API)
+    return axios.get(API)
   },
-  modifyProduct(http, product) {
+  modifyProduct(product) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product/${product.id}`;
-    return http.put(API, {data: product})
+    return axios.put(API, {data: product})
   },
-  async modifyBatchProducts(http, idx = 0, products = [], message = [], callback) {
+  async modifyBatchProducts(idx = 0, products = [], message = [], callback) {
     if (idx >= products.length) {
       callback(message);
       return
     }
-    await this.modifyProduct(http, products[idx]).then((response) => {
+    await this.modifyProduct(products[idx]).then((response) => {
       console.log("modifyProduct", response);
       response.data.name = products[idx].title;
       message.push(response.data);
     });
 
-    await this.modifyBatchProducts(http, idx + 1, products, message, callback);
+    await this.modifyBatchProducts(idx + 1, products, message, callback);
   },
-  uploadImage(http, formData) {
+  uploadImage(formData) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/upload`;
-    return http.post(API, formData, {
+    return axios.post(API, formData, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
     })
   },
-  createProduct(http, product) {
+  createProduct(product) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product`;
-    return http.post(API, {data: product})
+    return axios.post(API, {data: product})
   },
-  deleteProduct(http, id) {
+  deleteProduct(id) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/product/${id}`;
-    return http.delete(API)
+    return axios.delete(API)
   },
-  async deleteBatchProducts(http, idx = 0, items = [], message = [], callback) {
+  async deleteBatchProducts(idx = 0, items = [], message = [], callback) {
     if (idx >= items.length) {
       callback(message);
       return
     }
-    await this.deleteProduct(http, items[idx].id).then((response) => {
+    await this.deleteProduct(items[idx].id).then((response) => {
       console.log("deleteProduct", response);
       response.data.name = items[idx].title;
       message.push(response.data);
     });
 
-    await this.deleteBatchProducts(http, idx + 1, items, message, callback);
+    await this.deleteBatchProducts(idx + 1, items, message, callback);
   },
 
 
   // admin order
-  getOrders(http, page) {
+  getOrders(page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/orders?page=${page}`;
-    return http.get(API)
+    return axios.get(API)
   },
 
 
   // admin coupon
-  createCoupon(http, coupon) {
+  createCoupon(coupon) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon`;
-    return http.post(API, {data: coupon})
+    return axios.post(API, {data: coupon})
   },
-  getCoupons(http, page) {
+  getCoupons(page) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupons?page=${page}`;
-    return http.get(API)
+    return axios.get(API)
   },
-  deleteCoupon(http, id) {
+  deleteCoupon(id) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon/${id}`;
-    return http.delete(API)
+    return axios.delete(API)
   },
-  async deleteBatchCoupons(http, idx = 0, items = [], message = [], callback) {
+  async deleteBatchCoupons(idx = 0, items = [], message = [], callback) {
     if (idx >= items.length) {
       callback(message);
       return
     }
-    await this.deleteCoupon(http, items[idx].id).then((response) => {
+    await this.deleteCoupon(items[idx].id).then((response) => {
       console.log("deleteCoupon", response);
       response.data.name = items[idx].title;
       message.push(response.data);
     });
 
-    await this.deleteBatchCoupons(http, idx + 1, items, message, callback);
+    await this.deleteBatchCoupons(idx + 1, items, message, callback);
   },
-  modifyCoupon(http, item) {
+  modifyCoupon(item) {
     let API = `${process.env.SERVER_URL}/api/${process.env.API_PATH}/admin/coupon/${item.id}`;
-    return http.put(API, {data: item})
+    return axios.put(API, {data: item})
   },
-  async modifyBatchCoupons(http, idx = 0, items = [], message = [], callback) {
+  async modifyBatchCoupons(idx = 0, items = [], message = [], callback) {
     if (idx >= items.length) {
       callback(message);
       return
     }
-    await this.modifyCoupon(http, items[idx]).then((response) => {
+    await this.modifyCoupon(items[idx]).then((response) => {
       console.log("modifyCoupon", response);
       response.data.name = items[idx].title;
       message.push(response.data);
     });
 
-    await this.modifyBatchCoupons(http, idx + 1, items, message, callback);
+    await this.modifyBatchCoupons(idx + 1, items, message, callback);
   },
 
 }

@@ -96,7 +96,7 @@
       getForeProductDetail() {
         this.isLoading = true;
         let vm = this;
-        apiUtil.getForeProductDetail(this.$http, this.productId).then((response) => {
+        apiUtil.getForeProductDetail(this.productId).then((response) => {
           logger.debug(this, "getForeProductDetail", response);
           if (response.data.success) {
             vm.detail = apiUtil.productToLocalFormat(response.data.product);

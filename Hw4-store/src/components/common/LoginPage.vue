@@ -55,7 +55,7 @@
     methods: {
       onSubmit() {
         this.isLoading = true ;
-        apiUtil.login(this.$http, this.username, this.password).then((response) => {
+        apiUtil.login(this.username, this.password).then((response) => {
           logger.debug(this, "login" ,response.data);
           this.loginFailed = !response.data.success;
           this.isLoading = false ;

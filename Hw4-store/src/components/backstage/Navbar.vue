@@ -99,7 +99,7 @@
         ,
         // TODO: 要移到外層去做
         logout() {
-          apiUtil.logout(this.$http).then((response) => {
+          apiUtil.logout().then((response) => {
             logger.debug(this, "logout", response);
             routerUtil.gotoHomePage(this.$router);
           })

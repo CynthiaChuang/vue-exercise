@@ -13,7 +13,7 @@
     beforeRouteUpdate (to, from, next) {
       logger.debug(this,"beforeRouteUpdate", to);
       if (to.meta.requiresAuth) {
-        apiUtil.checkPermission(this.$http).then((response) => {
+        apiUtil.checkPermission().then((response) => {
           logger.debug(this, "checkPermission", response.data);
           if (!response.data.success) {
             routerUtil.gotoLogin(this.$router)
@@ -31,7 +31,7 @@
 
       if (to.meta.requiresAuth) {
         next(vm => {
-          apiUtil.checkPermission(vm.$http).then((response) => {
+          apiUtil.checkPermission().then((response) => {
             logger.debug(vm, "checkPermission", response.data);
             if (!response.data.success) {
               routerUtil.gotoLogin(vm.$router)

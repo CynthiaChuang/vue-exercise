@@ -199,7 +199,7 @@
       getCoupons(index = 1) {
         this.isLoading = true;
         let vm = this;
-        apiUtil.getCoupons(this.$http, index).then((response) => {
+        apiUtil.getCoupons(index).then((response) => {
           logger.debug(this, "getCoupons", response);
           if (response.data.success) {
 
@@ -228,7 +228,7 @@
 
         item = apiUtil.couponToServerFormat(item);
 
-        apiUtil.modifyCoupon(this.$http, item).then((response) => {
+        apiUtil.modifyCoupon(item).then((response) => {
           logger.debug(this, "modifyCoupon", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
@@ -250,7 +250,7 @@
 
         item = apiUtil.couponToServerFormat(item);
 
-        apiUtil.createCoupon(this.$http, item).then((response) => {
+        apiUtil.createCoupon(item).then((response) => {
           logger.debug(this, "createCoupon", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
@@ -266,7 +266,7 @@
           return {id: item.id, title: item.title}
         });
 
-        apiUtil.deleteBatchCoupons(this.$http, 0, deleteItems, [], (responses) => {
+        apiUtil.deleteBatchCoupons(0, deleteItems, [], (responses) => {
           logger.debug(this, "deleteBatchCoupons", responses);
 
           let failed = [];
@@ -317,7 +317,7 @@
       },
       modifyBatchCoupons(items, messageType = 'giveCoupons') {
         this.isLoading = true;
-        apiUtil.modifyBatchCoupons(this.$http, 0, items, [], (responses) => {
+        apiUtil.modifyBatchCoupons(0, items, [], (responses) => {
           logger.debug(this, "modifyBatchCoupons", responses);
 
           let failed = [];

@@ -232,7 +232,7 @@
         const formData = new FormData();
         formData.append("file-to-upload", img);
 
-        apiUtil.uploadImage(this.$http, formData).then((response) => {
+        apiUtil.uploadImage(formData).then((response) => {
           logger.debug(this, "uploadImage", response);
           this.isImageUploading = false;
           if (response.data.success) {

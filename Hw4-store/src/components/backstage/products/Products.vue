@@ -205,7 +205,7 @@
       getProducts(index = 1) {
         this.isLoading = true;
         let vm = this;
-        apiUtil.getProducts(this.$http, index).then((response) => {
+        apiUtil.getProducts(index).then((response) => {
           logger.debug(this, "getProducts", response);
           if (response.data.success) {
             vm.products = response.data.products.map((item) => {
@@ -227,7 +227,7 @@
         this.hideUploadDialog();
 
         item = apiUtil.productToServerFormat(item);
-        apiUtil.createProduct(this.$http, item).then((response) => {
+        apiUtil.createProduct(item).then((response) => {
           logger.debug(this, "createProduct", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
@@ -249,7 +249,7 @@
         this.hideModifyDialog();
 
         item = apiUtil.productToServerFormat(item);
-        apiUtil.modifyProduct(this.$http, item).then((response) => {
+        apiUtil.modifyProduct(item).then((response) => {
           logger.debug(this, "modifyProduct", response);
           this.pushAlertMessage(`${response.data.message}:${item.title}`,
             response.data.success ? "success" : "danger");
@@ -264,7 +264,7 @@
           return {id: item.id, title: item.title}
         });
 
-        apiUtil.deleteBatchProducts(this.$http, 0, deleteItems, [], (responses) => {
+        apiUtil.deleteBatchProducts(0, deleteItems, [], (responses) => {
           logger.debug(this, "deleteBatchProducts", responses);
 
           let failed = [];
@@ -320,7 +320,7 @@
       },
       modifyBatchProducts(items, messageType = 'pullOffError') {
         this.isLoading = true;
-        apiUtil.modifyBatchProducts(this.$http, 0, items, [], (responses) => {
+        apiUtil.modifyBatchProducts(0, items, [], (responses) => {
           logger.debug(this, "modifyBatchProducts", responses);
 
           let failed = [];
